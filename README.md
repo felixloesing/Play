@@ -1,1 +1,1 @@
-#CSCI 201: Play
+# CSCI 201
