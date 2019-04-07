@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Login</title>
+	<title>Register</title>
 	
 	<link rel="stylesheet" href="bootstrap/bootstrap.min.css">
 	<link rel="stylesheet" href="fontawesome/css/all.min.css">
@@ -20,15 +20,17 @@
 	%>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script>
-		function login() {
+		function register() {
 			uname = document.getElementById('usernameInput').value;
-			pw1 = document.getElementById('passwordInput').value;
+			pw1 = document.getElementById('passwordInput1').value;
+			pw2 = document.getElementById('passwordInput2').value;
 			$
 					.ajax({
-						url : "LoginServlet",
+						url : "RegisterServlet",
 						data : {
 							username : uname,
-							password : pw1
+							password1 : pw1,
+							password2 : pw2
 						},
 						success : function(result) {
 							console.log(result);
@@ -53,21 +55,12 @@
 	 			
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav ml-auto">
-				<% if(loggedIn) { %>
 	   				<li class="nav-item">
-	     				<a class="nav-link" href="#">Profile</a>
+	     				<a class="nav-link" href="login.jsp">Login</a>
 	   				</li>
 	   				<li class="nav-item">
-	     				<a class="nav-link" href="#">Logout</a>
+	     				<a class="nav-link active" href="register.jsp">Register</a>
 	   				</li>
-	   			<% } else { %>
-	   				<li class="nav-item">
-	     				<a class="nav-link active" href="login.jsp">Login</a>
-	   				</li>
-	   				<li class="nav-item">
-	     				<a class="nav-link" href="register.jsp">Register</a>
-	   				</li>
-	   			<% } %>
 	   			</ul>
 			</div>
 	   	</nav>
@@ -75,7 +68,7 @@
 		<div class="align-self-center flex-grow-1">
 			<div class="h-100 d-flex flex-column justify-content-center">
 				<div class="border p-5 bg-white rounded">
-					<h2 class="text-center">Login</h2>
+					<h2 class="text-center">Register</h2>
 					<form class="w-100" method="POST" onsubmit="return false;">
 						<div class="form-group">
 							<br />
@@ -84,19 +77,23 @@
 								aria-describedby="emailHelp" placeholder="Enter username">
 						</div>
 						<div class="form-group">
-							<label for="exampleInputPassword1">Password</label> <input
-								type="password" class="form-control" id="passwordInput"
+							<label for="InputPassword1">Password</label> <input
+								type="password" class="form-control" id="passwordInput1"
 								placeholder="Password">
+						</div>
+						<div class="form-group">
+							<label for="InputPassword2">Confirm Password</label> <input
+								type="password" class="form-control" id="passwordInput2"
+								placeholder="Confirm Password">
 						</div>
 						<p id="errorMessage" class="form-text text-muted">&nbsp;</p>
 						<div class="text-center">
-							<button type="submit" class="btn btn-dark" onclick="return login();">Login</button>
+							<button type="submit" class="btn btn-dark" onclick="return register();">Register</button>
 						</div>
 					</form>
 				</div>
 			</div>
 		</div>
-
 	</div>
 
 	<script src="jquery/jquery-3.3.1.min.js" ></script>

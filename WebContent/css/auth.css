@@ -1,0 +1,8 @@
+html, body {
+	height: 100%;
+	background-image: url('../login-background.jpg');
+}
+
+.container-fluid > div {
+	width: 33%;
+}
