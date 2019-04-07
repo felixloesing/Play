@@ -75,7 +75,7 @@
 			<div class="form-group">
 				<br />
 				<label for="usernameInput">Username</label> <input
-					type="email" class="form-control" id="usernameInput"
+					type="text" class="form-control" id="usernameInput"
 					aria-describedby="emailHelp" placeholder="Enter username">
 			</div>
 			<div class="form-group">

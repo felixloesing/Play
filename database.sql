@@ -8,6 +8,12 @@ CREATE TABLE `User` (
   `password` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`userID`),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC));
+  
+INSERT INTO User (username, password)
+	VALUES 	('Carson', 'pw'), 
+			('Fariz', 'pw'),
+            ('Felix', 'pw'),
+            ('Michael', 'pw');
 
 CREATE TABLE `Event` (
   `eventID` INT NOT NULL AUTO_INCREMENT,

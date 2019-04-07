@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import classes.DatabaseConnector;
 
@@ -49,6 +50,10 @@ public class LoginServlet extends HttpServlet {
 				responseString = "The username and password do not match";
 			} else {
 				responseString = "";
+				HttpSession session = request.getSession();
+				session.setAttribute("username", username);
+				int userID = DatabaseConnector.getUser(username).getUserID();
+				session.setAttribute("userID", userID);
 			}
 		}
 		
