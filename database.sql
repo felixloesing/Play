@@ -1,22 +1,50 @@
 DROP DATABASE if exists Play;
 CREATE DATABASE Play;
 USE Play;
-CREATE TABLE User (
-	userID int(11) primary key not null auto_increment,
-	username varchar(50) not null,
-	password varchar(50) not null
-);
-INSERT INTO User (username, password) VALUES ('Barack', 'asdf');
-INSERT INTO User (username, password) VALUES ('GeorgeW', 'asdf');
-INSERT INTO User (username, password) VALUES ('DonaldUser', 'asdf');
-CREATE TABLE Event (
-	eventID int(11) primary key not null auto_increment,
-	name varchar(50) not null
-);
-CREATE TABLE Comment (
-	commentID int(11) primary key not null auto_increment,
-	userID int(11) not null,
-	eventID int(11) not null,
-	FOREIGN KEY fk1(userID) REFERENCES User(userID),
-	FOREIGN KEY fk2(pageID) REFERENCES Event(eventID)
-);
+
+CREATE TABLE `User` (
+  `userID` INT NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`userID`),
+  UNIQUE INDEX `username_UNIQUE` (`username` ASC));
+
+CREATE TABLE `Event` (
+  `eventID` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `creatorID` INT NOT NULL,
+  `latitude` VARCHAR(45) NOT NULL,
+  `longitude` VARCHAR(45) NOT NULL,
+  `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `upvotes` INT NOT NULL DEFAULT 0,
+  `description` VARCHAR(45) NOT NULL,
+  `expirationDate` DATETIME NOT NULL,
+  `website` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`eventID`),
+  INDEX `userID_idx` (`creatorID` ASC),
+  CONSTRAINT `userID`
+    FOREIGN KEY (`creatorID`)
+    REFERENCES `Play`.`User` (`userID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE `Comment` (
+  `commentID` INT NOT NULL AUTO_INCREMENT,
+  `creatorID` INT NOT NULL,
+  `eventID` INT NOT NULL,
+  `message` VARCHAR(45) NOT NULL,
+  `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`commentID`),
+  INDEX `userID_idx` (`creatorID` ASC),
+  INDEX `eventID_idx` (`eventID` ASC),
+  CONSTRAINT `userID_comment`
+    FOREIGN KEY (`creatorID`)
+    REFERENCES `Play`.`User` (`userID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `eventID`
+    FOREIGN KEY (`eventID`)
+    REFERENCES `Play`.`Event` (`eventID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
