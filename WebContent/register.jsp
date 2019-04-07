@@ -65,7 +65,7 @@
      				<a class="nav-link" href="login.jsp">Login</a>
    				</li>
    				<li class="nav-item">
-     				<a class="nav-link" href="register.jsp">Register</a>
+     				<a class="nav-link active" href="register.jsp">Register</a>
    				</li>
    			<% } %>
    			</ul>
