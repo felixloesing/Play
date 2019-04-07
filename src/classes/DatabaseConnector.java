@@ -329,4 +329,43 @@ public class DatabaseConnector {
 		
 		return comments;
 	}
+	
+	public static boolean createComment(
+			int creatorID,
+			int eventID,
+			String message) {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		int rs = 0;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = DriverManager.getConnection(DB_URL);
+			ps = conn.prepareStatement("INSERT INTO Comment "
+					+ "(creatorID, eventID, message) "
+					+ "VALUES (?, ?, ?)");
+			ps.setInt(1, creatorID);
+			ps.setInt(2, eventID);
+			ps.setString(3, message);
+			
+			rs = ps.executeUpdate();
+		} catch (SQLException sqle) {
+			System.out.println ("SQLException: " + sqle.getMessage());
+		} catch (ClassNotFoundException cnfe) {
+			System.out.println ("ClassNotFoundException: " + cnfe.getMessage());
+		} finally {
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+		}
+		
+		return rs > 0;
+	}
+	
 }
