@@ -32,15 +32,6 @@ public class LoginServlet extends HttpServlet {
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		/*
-		int status = DB.login(username, password);
-		
-		if (status == 1) {
-			System.out.println("match2");
-			HttpSession session = request.getSession();
-			session.setAttribute("registeredUser", username);
-		}
-		*/
 		
 		String responseString = "";
 		if (username.equals("")) {
