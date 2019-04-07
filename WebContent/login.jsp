@@ -4,11 +4,11 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Home</title>
+	<title>Login</title>
 	
 	<link rel="stylesheet" href="bootstrap/bootstrap.min.css">
 	<link rel="stylesheet" href="fontawesome/css/all.min.css">
-	<link rel="stylesheet" href="css/login.css">
+	<link rel="stylesheet" href="css/auth.css">
 	<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -88,7 +88,7 @@
 								type="password" class="form-control" id="passwordInput"
 								placeholder="Password">
 						</div>
-						<small id="errorMessage" class="form-text text-muted">&nbsp;</small>
+						<p id="errorMessage" class="form-text text-muted">&nbsp;</p>
 						<div class="text-center">
 							<button type="submit" class="btn btn-dark" onclick="return login();">Login</button>
 						</div>
