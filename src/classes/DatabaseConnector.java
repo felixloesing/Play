@@ -221,7 +221,10 @@ public class DatabaseConnector {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = DriverManager.getConnection(DB_URL);
-			ps = conn.prepareStatement("INSERT INTO Event (name, creatorID, latitude, longitude, description, expirationDate, website) VALUES (?, ?, ?, ?, ?, ?, ?)");
+			ps = conn.prepareStatement("INSERT INTO Event "
+					+ "(name, creatorID, latitude, longitude, "
+					+ "description, expirationDate, website) "
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?)");
 			ps.setString(1, name);
 			ps.setInt(2, creatorID);
 			ps.setString(3, latitude);
@@ -234,6 +237,37 @@ public class DatabaseConnector {
 			System.out.println ("SQLException: " + sqle.getMessage());
 		} catch (ClassNotFoundException cnfe) {
 			System.out.println ("ClassNotFoundException: " + cnfe.getMessage());
+		} finally {
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+		}
+		
+		return rs > 0;
+	}
+	
+	public boolean upvoteEvent(int eventID) {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		int rs = 0;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = DriverManager.getConnection(DB_URL);
+			ps = conn.prepareStatement("UPDATE Event SET upvotes = upvotes + 1 "
+					+ "WHERE eventID=?");
+			ps.setInt(1, eventID);
+			rs = ps.executeUpdate();
+		} catch (SQLException sqle) {
+			System.out.println ("SQLException: " + sqle.getMessage());
+		} catch (ClassNotFoundException cnfe) {
+			System.out.println ("CNFException: " + cnfe.getMessage());
 		} finally {
 			try {
 				if (ps != null) {
