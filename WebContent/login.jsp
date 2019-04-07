@@ -17,6 +17,30 @@
 		boolean loggedIn = false;
 		// check if logged in
 	%>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script>
+		function login() {
+			uname = document.getElementById('usernameInput').value;
+			pw1 = document.getElementById('passwordInput').value;
+			$
+					.ajax({
+						url : "LoginServlet",
+						data : {
+							username : uname,
+							password : pw1
+						},
+						success : function(result) {
+							console.log(result);
+							if (result === "") {
+								window.location.href = "index.jsp";
+							} else {
+								document.getElementById('errorMessage').innerHTML = result;
+								return false;
+							}
+						}
+					})
+		}
+	</script>
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -47,18 +71,20 @@
    	</nav>
 
 	<div class="container-fluid">
-		<form>
+		<form method="POST" onsubmit="return false;">
 			<div class="form-group">
-				<label for="exampleInputEmail1">Email address</label> <input
-					type="email" class="form-control" id="exampleInputEmail1"
-					aria-describedby="emailHelp" placeholder="Enter email">
+				<br />
+				<label for="usernameInput">Username</label> <input
+					type="email" class="form-control" id="usernameInput"
+					aria-describedby="emailHelp" placeholder="Enter username">
 			</div>
 			<div class="form-group">
 				<label for="exampleInputPassword1">Password</label> <input
-					type="password" class="form-control" id="exampleInputPassword1"
+					type="password" class="form-control" id="passwordInput"
 					placeholder="Password">
 			</div>
-			<button type="submit" class="btn btn-primary">Submit</button>
+			<small id="errorMessage" class="form-text text-muted">&nbsp;</small>
+			<button type="submit" class="btn btn-primary" onclick="return login();">Login</button>
 		</form>
 
 	</div>
