@@ -213,7 +213,6 @@ public class DatabaseConnector {
 			String latitude,
 			String longitude,
 			String description,
-			Timestamp expirationDate,
 			String website) {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -230,8 +229,7 @@ public class DatabaseConnector {
 			ps.setString(3, latitude);
 			ps.setString(4, longitude);
 			ps.setString(5, description);
-			ps.setTimestamp(6, expirationDate);
-			ps.setString(7, website);
+			ps.setString(6, website);
 			rs = ps.executeUpdate();
 		} catch (SQLException sqle) {
 			System.out.println ("SQLException: " + sqle.getMessage());
