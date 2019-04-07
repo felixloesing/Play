@@ -207,6 +207,49 @@ public class DatabaseConnector {
 		return events;
 	}
 	
+	public static boolean createEvent(
+			String name,
+			int creatorID,
+			String latitude,
+			String longitude,
+			String description,
+			Timestamp expirationDate,
+			String website) {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		int rs = 0;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = DriverManager.getConnection(DB_URL);
+			ps = conn.prepareStatement("INSERT INTO Event (name, creatorID, latitude, longitude, description, expirationDate, website) VALUES (?, ?, ?, ?, ?, ?, ?)");
+			ps.setString(1, name);
+			ps.setInt(2, creatorID);
+			ps.setString(3, latitude);
+			ps.setString(4, longitude);
+			ps.setString(5, description);
+			ps.setTimestamp(6, expirationDate);
+			ps.setString(7, website);
+			rs = ps.executeUpdate();
+		} catch (SQLException sqle) {
+			System.out.println ("SQLException: " + sqle.getMessage());
+		} catch (ClassNotFoundException cnfe) {
+			System.out.println ("ClassNotFoundException: " + cnfe.getMessage());
+		} finally {
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+		}
+		
+		return rs > 0;
+	}
+	
 	public static ArrayList<Comment> getComments(int eventID) {
 		Connection conn = null;
 		PreparedStatement ps = null;
