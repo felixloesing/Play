@@ -1,6 +1,7 @@
 package classes;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Event {
@@ -14,6 +15,8 @@ public class Event {
 	private String description;
 	private Date expirationDate;
 	private String website;
+	private ArrayList<Comment> comments;
+	
 	
 	public Event(
 			int eventID,
@@ -37,6 +40,7 @@ public class Event {
 		this.description = description;
 		this.expirationDate = expirationDate;
 		this.website = website;
+		this.comments = DatabaseConnector.getComments(eventID);
 	}
 
 	public int getEventID() {
@@ -77,5 +81,9 @@ public class Event {
 
 	public User getCreator() {
 		return creator;
+	}
+
+	public ArrayList<Comment> getComments() {
+		return comments;
 	}
 }
