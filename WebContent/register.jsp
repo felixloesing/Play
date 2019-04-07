@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Home</title>
+	<title>Register</title>
 	
 	<link rel="stylesheet" href="bootstrap/bootstrap.min.css">
 	<link rel="stylesheet" href="fontawesome/all.min.css">
@@ -19,15 +19,17 @@
 	%>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script>
-		function login() {
+		function register() {
 			uname = document.getElementById('usernameInput').value;
-			pw1 = document.getElementById('passwordInput').value;
+			pw1 = document.getElementById('passwordInput1').value;
+			pw2 = document.getElementById('passwordInput2').value;
 			$
 					.ajax({
-						url : "LoginServlet",
+						url : "RegisterServlet",
 						data : {
 							username : uname,
-							password : pw1
+							password1 : pw1,
+							password2 : pw2
 						},
 						success : function(result) {
 							console.log(result);
@@ -79,14 +81,18 @@
 					aria-describedby="emailHelp" placeholder="Enter username">
 			</div>
 			<div class="form-group">
-				<label for="exampleInputPassword1">Password</label> <input
-					type="password" class="form-control" id="passwordInput"
+				<label for="InputPassword1">Password</label> <input
+					type="password" class="form-control" id="passwordInput1"
 					placeholder="Password">
 			</div>
+			<div class="form-group">
+				<label for="InputPassword2">Confirm Password</label> <input
+					type="password" class="form-control" id="passwordInput2"
+					placeholder="Confirm Password">
+			</div>
 			<small id="errorMessage" class="form-text text-muted">&nbsp;</small>
-			<button type="submit" class="btn btn-primary" onclick="return login();">Login</button>
+			<button type="submit" class="btn btn-primary" onclick="return register();">Register</button>
 		</form>
-
 
 	</div>
 

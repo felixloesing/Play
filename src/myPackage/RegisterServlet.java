@@ -11,16 +11,16 @@ import javax.servlet.http.HttpSession;
 import classes.DatabaseConnector;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class RegisterServlet
  */
-@WebServlet("/LoginServlet")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/RegisterServlet")
+public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public RegisterServlet() {
         super();
     }
 
@@ -28,23 +28,31 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		String username = request.getParameter("username");
-		String password = request.getParameter("password");
+		String password1 = request.getParameter("password1");
+		String password2 = request.getParameter("password2");
 		
 		String responseString = "";
 		if (username.equals("")) {
 			responseString = "Please enter your username.";
 			
-		} else if (password.equals("")) {
+		} else if (!password1.equals(password2)) {
+			responseString = "Passwords do not match";
+			
+		} else if (password1.equals("")) {
 			responseString = "Please enter your password.";
 			
-		} else if (DatabaseConnector.getUser(username) == null) {
+		} else if (password2.equals("")) {
+			responseString = "Please confirm your password.";
+			
+		} else if (DatabaseConnector.getUser(username) != null) {
 			//user does not exist
-			responseString = "The username is not valid.";
+			responseString = "The username is already taken.";
 		} else {
 			//user exists
-			if (DatabaseConnector.login(username, password) == null) {
-				responseString = "The username and password do not match";
+			if (DatabaseConnector.createUser(username, password1, password2) == false) {
+				responseString = "An error occured.";
 			} else {
 				responseString = "";
 				HttpSession session = request.getSession();
