@@ -28,7 +28,7 @@
 	 		</button>
 	 			
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<div class="ml-auto d-flex align-items-center">
+				<div class="mr-auto">
 	  				<form class="text-white" action="CitySearchServlet" method="POST">
 						<div class="input-group">
 							<input type="text" class="form-control" name="city" placeholder="Los Angeles">
@@ -73,7 +73,6 @@
 
 			map = new google.maps.Map(document.getElementById('map'), {
 				center : myLatLng,
-				zoom : 4,
 				zoom : 6,
 				streetViewControl : false,
 				mapTypeControl : false,
