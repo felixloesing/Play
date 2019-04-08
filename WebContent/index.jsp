@@ -417,18 +417,20 @@
 						]
 			});
 			// Create add event button
-			var controlUI = document.createElement('button');
-			controlUI.classList.add('w-50');
-			controlUI.classList.add('btn');
-			controlUI.classList.add('btn-light');
-			controlUI.style.margin = '10px';
-			controlUI.title = 'Click to add a new event';
-			controlUI.innerHTML = 'Add Event';
-			controlUI.index = 1;
-			
-			controlUI.addEventListener('click', function() {
-				window.location.href = "createEvents.jsp";
-			});
+			<% if (loggedIn) { %>
+				var controlUI = document.createElement('button');
+				controlUI.classList.add('w-50');
+				controlUI.classList.add('btn');
+				controlUI.classList.add('btn-light');
+				controlUI.style.margin = '10px';
+				controlUI.title = 'Click to add a new event';
+				controlUI.innerHTML = 'Add Event';
+				controlUI.index = 1;
+				
+				controlUI.addEventListener('click', function() {
+					window.location.href = "createEvents.jsp";
+				});
+			<% } %>
 						
 			// Create the search box and link it to the UI element.
 			var input = document.createElement('input');
@@ -444,7 +446,9 @@
 			div.classList.add('d-flex');
 			div.classList.add('flex-column');
 			div.appendChild(input);
-			div.appendChild(controlUI);
+			<% if (loggedIn) { %>
+				div.appendChild(controlUI);
+			<% } %>
 			
 			// push div to map
 			map.controls[google.maps.ControlPosition.TOP_LEFT]
