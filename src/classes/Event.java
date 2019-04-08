@@ -14,6 +14,7 @@ public class Event {
 	private String description;
 	private Date expirationDate;
 	private String website;
+	private int colorCode;
 	private ArrayList<Comment> comments;
 	
 	
@@ -38,6 +39,7 @@ public class Event {
 		this.description = description;
 		this.expirationDate = expirationDate;
 		this.website = website;
+		this.colorCode = 0;
 		this.comments = DatabaseConnector.getComments(eventID);
 	}
 
@@ -80,5 +82,13 @@ public class Event {
 
 	public ArrayList<Comment> getComments() {
 		return comments;
+	}
+	
+	public int getColorCOde() {
+		return colorCode;
+	}
+	
+	public void setColorCode(int code) {
+		this.colorCode = code;
 	}
 }

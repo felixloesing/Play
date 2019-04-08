@@ -160,7 +160,11 @@ public class DatabaseConnector {
 	public static ArrayList<Event> getEvents() {
 		Connection conn = null;
 		PreparedStatement ps = null;
+		PreparedStatement psSize = null;
+		PreparedStatement psTotal = null;
 		ResultSet rs = null;
+		ResultSet rsSize = null;
+		ResultSet rsTotal = null;
 		ArrayList<Event> events = new ArrayList<Event>();
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -169,7 +173,23 @@ public class DatabaseConnector {
 					+ "FROM Event e "
 					+ "LEFT JOIN User u ON e.creatorID=u.userID");
 			rs = ps.executeQuery();
+			
+			psSize = conn.prepareStatement("SELECT COUNT(*) FROM Event");
+			rsSize = psSize.executeQuery();
+			int size = 0;
+			while(rsSize.next()) {
+				size = rs.getInt(1);
+			}
+			
+			psTotal = conn.prepareStatement("SELECT SUM(upvotes) FROM Event");
+			rsTotal = psTotal.executeQuery();
+			int total = 0;
+			while(rsTotal.next()) {
+				total = rs.getInt(1);
+			}
+			
 			while(rs.next()) {
+				int up = rs.getInt("upvotes");
 				Event event = new Event(
 						rs.getInt("eventID"),
 						rs.getString("name"),
@@ -182,6 +202,21 @@ public class DatabaseConnector {
 						rs.getString("description"),
 						rs.getTimestamp("expirationDate"),
 						rs.getString("website"));
+				if (up == 0) {
+					event.setColorCode(0);
+				} else {
+					//calc color
+					float avg = total/size;
+					float ratio = up/avg;
+					if (ratio < 0.75) {
+						event.setColorCode(1);
+					} else if (ratio > 0.75 && ratio < 1.25) {
+						event.setColorCode(2);
+					} else if (ratio > 1.25) {
+						event.setColorCode(3);
+					}
+					
+				}
 				events.add(event);
 			}
 		} catch (SQLException sqle) {
@@ -194,6 +229,18 @@ public class DatabaseConnector {
 					rs.close();
 				}
 				if (ps != null) {
+					ps.close();
+				}
+				if (rsSize != null) {
+					rs.close();
+				}
+				if (psSize != null) {
+					ps.close();
+				}
+				if (rsTotal != null) {
+					rs.close();
+				}
+				if (psTotal != null) {
 					ps.close();
 				}
 				if (conn != null) {
