@@ -21,14 +21,14 @@
 </head>
 <body>
 	<div class="container-fluid p-0 d-flex flex-column h-100">
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<nav class="navbar navbar-expand-lg navbar-dark">
 	       	<a class="navbar-brand font-weight-bold" href="index.jsp">Play</a>
 	       	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 	   			<span class="navbar-toggler-icon"></span>
 	 		</button>
 	 			
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<div class="ml-auto d-flex align-items-center">
+				<div class="mr-auto">
 	  				<form class="text-white" action="CitySearchServlet" method="POST">
 						<div class="input-group">
 							<input type="text" class="form-control" name="city" placeholder="Los Angeles">
@@ -48,10 +48,10 @@
 	   				</li>
 	   			<% } else { %>
 	   				<li class="nav-item">
-	     				<a class="nav-link" href="#">Login</a>
+	     				<a class="nav-link" href="login.jsp">Login</a>
 	   				</li>
 	   				<li class="nav-item">
-	     				<a class="nav-link" href="#">Register</a>
+	     				<a class="nav-link" href="register.jsp">Register</a>
 	   				</li>
 	   			<% } %>
 	   			</ul>
@@ -73,7 +73,178 @@
 
 			map = new google.maps.Map(document.getElementById('map'), {
 				center : myLatLng,
-				zoom : 4
+				zoom : 6,
+				streetViewControl : false,
+				mapTypeControl : false,
+				scaleControlOptions : google.maps.ControlPosition.TOP_LEFT,
+				styles : [ {
+					"elementType" : "geometry",
+					"stylers" : [ {
+						"color" : "#242f3e"
+					} ]
+				}, {
+					"elementType" : "labels.text.fill",
+					"stylers" : [ {
+						"color" : "#746855"
+					} ]
+				}, {
+					"elementType" : "labels.text.stroke",
+					"stylers" : [ {
+						"color" : "#242f3e"
+					} ]
+				}, {
+					"featureType" : "administrative",
+					"elementType" : "geometry",
+					"stylers" : [ {
+						"visibility" : "off"
+					} ]
+				}, {
+					"featureType" : "administrative.locality",
+					"elementType" : "labels.text.fill",
+					"stylers" : [ {
+						"color" : "#d59563"
+					} ]
+				}, {
+					"featureType" : "administrative.neighborhood",
+					"stylers" : [ {
+						"visibility" : "off"
+					} ]
+				}, {
+					"featureType" : "poi",
+					"stylers" : [ {
+						"visibility" : "off"
+					} ]
+				}, {
+					"featureType" : "poi",
+					"elementType" : "labels.text",
+					"stylers" : [ {
+						"visibility" : "off"
+					} ]
+				}, {
+					"featureType" : "poi",
+					"elementType" : "labels.text.fill",
+					"stylers" : [ {
+						"color" : "#d59563"
+					} ]
+				}, {
+					"featureType" : "poi.park",
+					"elementType" : "geometry",
+					"stylers" : [ {
+						"color" : "#263c3f"
+					} ]
+				}, {
+					"featureType" : "poi.park",
+					"elementType" : "labels.text.fill",
+					"stylers" : [ {
+						"color" : "#6b9a76"
+					} ]
+				}, {
+					"featureType" : "road",
+					"elementType" : "geometry",
+					"stylers" : [ {
+						"color" : "#38414e"
+					} ]
+				}, {
+					"featureType" : "road",
+					"elementType" : "geometry.stroke",
+					"stylers" : [ {
+						"color" : "#212a37"
+					} ]
+				}, {
+					"featureType" : "road",
+					"elementType" : "labels",
+					"stylers" : [ {
+						"visibility" : "off"
+					} ]
+				}, {
+					"featureType" : "road",
+					"elementType" : "labels.icon",
+					"stylers" : [ {
+						"visibility" : "off"
+					} ]
+				}, {
+					"featureType" : "road",
+					"elementType" : "labels.text.fill",
+					"stylers" : [ {
+						"color" : "#9ca5b3"
+					} ]
+				}, {
+					"featureType" : "road.arterial",
+					"elementType" : "labels",
+					"stylers" : [ {
+						"visibility" : "off"
+					} ]
+				}, {
+					"featureType" : "road.highway",
+					"elementType" : "geometry",
+					"stylers" : [ {
+						"color" : "#746855"
+					} ]
+				}, {
+					"featureType" : "road.highway",
+					"elementType" : "geometry.stroke",
+					"stylers" : [ {
+						"color" : "#1f2835"
+					} ]
+				}, {
+					"featureType" : "road.highway",
+					"elementType" : "labels",
+					"stylers" : [ {
+						"visibility" : "off"
+					} ]
+				}, {
+					"featureType" : "road.highway",
+					"elementType" : "labels.text.fill",
+					"stylers" : [ {
+						"color" : "#f3d19c"
+					} ]
+				}, {
+					"featureType" : "road.local",
+					"stylers" : [ {
+						"visibility" : "off"
+					} ]
+				}, {
+					"featureType" : "transit",
+					"stylers" : [ {
+						"visibility" : "off"
+					} ]
+				}, {
+					"featureType" : "transit",
+					"elementType" : "geometry",
+					"stylers" : [ {
+						"color" : "#2f3948"
+					} ]
+				}, {
+					"featureType" : "transit.station",
+					"elementType" : "labels.text.fill",
+					"stylers" : [ {
+						"color" : "#d59563"
+					} ]
+				}, {
+					"featureType" : "water",
+					"elementType" : "geometry",
+					"stylers" : [ {
+						"color" : "#17263c"
+					} ]
+				}, {
+					"featureType" : "water",
+					"elementType" : "labels.text",
+					"stylers" : [ {
+						"visibility" : "off"
+					} ]
+				}, {
+					"featureType" : "water",
+					"elementType" : "labels.text.fill",
+					"stylers" : [ {
+						"color" : "#515c6d"
+					} ]
+				}, {
+					"featureType" : "water",
+					"elementType" : "labels.text.stroke",
+					"stylers" : [ {
+						"color" : "#17263c"
+					} ]
+				} ]
 			});
 		}
 	</script>

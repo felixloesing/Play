@@ -1,6 +1,10 @@
 html, body {
 	height: 100%;
-	background-image: url('../login-background.jpg');
+	background-image: url('../Group 2 (1).png');
+}
+
+.container-fluid > nav {
+	background-color: #262F3D;
 }
 
 .container-fluid > div {
