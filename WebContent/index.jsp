@@ -125,7 +125,7 @@
 										
 									});
 									marker.addListener('click', function() {
-										alert("ID: " + marker.get('store_id'));
+										alert("ID: " + marker.get('store_id') + '\n' + 'Upvotes: ' + marker.get('store_upvotes'));
 								    });
 							    }
 							return false;
