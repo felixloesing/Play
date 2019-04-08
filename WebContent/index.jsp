@@ -87,10 +87,28 @@
 										lat : events[i].latitude,
 										lng : events[i].longitude
 									};
-
+							        
+									var image = '';
+									
+									if(events[i].colorCode == 0) {
+										//black
+										image = 'https://cdn3.iconfinder.com/data/icons/web-ui-3/128/Marker-2-64.png'
+									} else if (events[i].colorCode == 1) {
+										//blue
+										image = 'https://cdn4.iconfinder.com/data/icons/web-ui-color/128/Marker-64.png';
+									} else if (events[i].colorCode == 2) {
+										//green
+										image = 'https://cdn3.iconfinder.com/data/icons/web-ui-color/128/Marker_green-64.png';
+									} else if (events[i].colorCode == 3) {
+										//red
+										image = 'https://cdn4.iconfinder.com/data/icons/web-ui-color/128/Marker_red-64.png';
+									}
+									
 							        let marker = new google.maps.Marker({
 										position: myLatLng,
+										animation: google.maps.Animation.DROP,
 										map: map,
+										icon: image,
 										
 										store_id: events[i].eventID,
 										store_creatorID: events[i].creator.userID,
@@ -102,11 +120,12 @@
 										store_description: events[i].description,
 										store_expirationDate: events[i].expirationDate,
 										store_website: events[i].website,
+										store_colorCode: events[i].colorCode,
 										store_comments: events[i].comments
 										
 									});
 									marker.addListener('click', function() {
-										alert("ID: " + marker.get('store_id'));
+										alert("ID: " + marker.get('store_id') + '\n' + 'Upvotes: ' + marker.get('store_upvotes'));
 								    });
 							    }
 							return false;
