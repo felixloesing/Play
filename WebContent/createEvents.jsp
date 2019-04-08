@@ -11,6 +11,7 @@
 	<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+	<link rel="stylesheet" href="css/createEvents.css">
 	
 	<link rel="manifest" href="site.webmanifest">
 	
@@ -31,11 +32,12 @@
 		}
 	%>
 	<script>
+		var latitude;
+		var longitude;
 		function createNewEvent() {
 			eventName = document.getElementById('eventNameInput').value;
 			eventDesc = document.getElementById('eventDescInput').value;
 			eventWebsite = document.getElementById('websiteInput').value;
-			eventLocation = document.getElementById('eventLocationInput').value;
 			expirationDate = document.getElementById('datetimepickerInput').value;
 			
 			$
@@ -45,7 +47,8 @@
 							name : eventName,
 							desc : eventDesc,
 							website : eventWebsite,
-							location : eventLocation,
+							lat : latitude,
+							lng : longitude,
 							expDate : expirationDate
 						},
 						success : function(result) {
@@ -107,15 +110,10 @@
 					type="text" class="form-control" id="websiteInput"
 					placeholder="Enter website for event">
 			</div>
-			<div class="form-group">
-				<label for="eventLocationInput">Location</label> <input
-					type="text" class="form-control" id="eventLocationInput"
-					placeholder="Location of event">
-			</div>
 			
 		
 			<div class="container">
-
+				<label for="eventDateInput">Date/Time</label>
             <div class="form-group">
                 <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
                     <input type="text" class="form-control" id="datetimepickerInput" data-target="#datetimepicker1"/>
@@ -134,6 +132,58 @@
            	</div>
 			</div>
 			
+			<div class="container">
+				<label for="eventLocationInput">Location</label>
+			<div id="floating-panel">
+      			<input id="address" type="textbox" value="Los Angeles">
+      				<input id="submit" type="button" value="Geocode">
+    		</div>
+    		<div id="map"></div>
+    		<script>
+      			function initMap() {
+        			var map = new google.maps.Map(document.getElementById('map'), {
+          				zoom: 8,
+          				center: {lat: 34.0522, lng: -118.243}
+        			});
+        			var geocoder = new google.maps.Geocoder();
+
+		        	document.getElementById('submit').addEventListener('click', function() {
+			    		geocodeAddress(geocoder, map);
+        			});
+      			}
+				var markersArray = [];
+				
+      			function geocodeAddress(geocoder, resultsMap) {
+        			var address = document.getElementById('address').value;
+        			geocoder.geocode({'address': address}, function(results, status) {
+         				 if (status === 'OK') {
+           					resultsMap.setCenter(results[0].geometry.location);
+           					clearMarkers();
+							var marker = new google.maps.Marker({
+              					map: resultsMap,
+              					position: results[0].geometry.location
+            				});
+							markersArray.push(marker);
+							latitude = results[0].geometry.location.lat();
+							longitude = results[0].geometry.location.lng();
+          				} else {
+            				alert('Geocode was not successful for the following reason: ' + status);
+          				}
+        			});
+      			}
+      			
+      			function clearMarkers() {
+      				for (var i = 0; i < markersArray.length; i++ ) {
+      				    markersArray[i].setMap(null);
+      				  }
+      				  markersArray.length = 0;
+      			}
+    		</script>
+    		<script async defer
+   			 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjFhnU6F3rpushBW0hf6kHMUzXVXPn2Xo&callback=initMap">
+    		</script>
+			
+			</div>
 			<small id="errorMessage" class="form-text text-muted">&nbsp;</small>
 			<button type="submit" class="btn btn-primary" onclick="return createNewEvent();">Create Event</button>
 		</form>

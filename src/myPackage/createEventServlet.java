@@ -37,7 +37,8 @@ public class createEventServlet extends HttpServlet {
 		String name = request.getParameter("name");
 		String desc = request.getParameter("desc");
 		String website = request.getParameter("website");
-		String location = request.getParameter("location");
+		String latitude = request.getParameter("lat");
+		String longitude = request.getParameter("lng");
 		String expDate =  request.getParameter("expDate");
 		
 		String username = request.getParameter("username");
@@ -62,15 +63,13 @@ public class createEventServlet extends HttpServlet {
 		else if(website.equals("")) {
 			responseString = "Please enter a website for your event.";
 		}
-		else if(location.equals("")) {
+		else if(longitude.equals("") || latitude.equals("")) {
 			responseString = "Please enter a location your event.";
 		}
 		else if(expDate.equals("")) {
 			responseString = "Please enter a date for your event";
 		}
 		else {
-			String latitude = "0";
-			String longitude = "0";
 			try {
 			    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
 			    Date parsedDate = dateFormat.parse(expDate);
