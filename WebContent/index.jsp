@@ -72,14 +72,15 @@
 							JSONString = result;
 							events = JSON.parse(JSONString);
 							
-								for (var i = 0; i < events.length; i++) {
+								let i;
+								for (i = 0; i < events.length; i++) {
 							        
 							        var myLatLng = {
 										lat : events[i].latitude,
 										lng : events[i].longitude
 									};
-							        
-									var marker = new google.maps.Marker({
+
+							        let marker = new google.maps.Marker({
 										position: myLatLng,
 										map: map,
 										
@@ -97,8 +98,8 @@
 										
 									});
 									marker.addListener('click', function() {
-								          alert("ID: " + marker.get('store_id'));
-								        });
+										alert("ID: " + marker.get('store_id'));
+								    });
 							    }
 							return false;
 						}
