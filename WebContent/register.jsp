@@ -15,8 +15,16 @@
 	<link rel="manifest" href="site.webmanifest">
 
 	<%
+		String username = (String)session.getAttribute("username");
+		if (username == null) {
+			username = "";
+		}
 		boolean loggedIn = false;
-		// check if logged in
+		if (username.equals("")) {
+			loggedIn = false;
+		} else {
+			loggedIn = true;
+		}
 	%>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script>
