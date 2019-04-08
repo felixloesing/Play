@@ -15,8 +15,16 @@
 	<link rel="manifest" href="site.webmanifest">
 
 	<%
+		String username = (String)session.getAttribute("username");
+		if (username == null) {
+			username = "";
+		}
 		boolean loggedIn = false;
-		// check if logged in
+		if (username.equals("")) {
+			loggedIn = false;
+		} else {
+			loggedIn = true;
+		}
 	%>
 </head>
 <body>
@@ -31,10 +39,10 @@
 				<ul class="navbar-nav ml-auto">
 				<% if(loggedIn) { %>
 	   				<li class="nav-item">
-	     				<a class="nav-link" href="#">Profile</a>
+	     				<a class="nav-link" href="profile.jsp">Profile</a>
 	   				</li>
 	   				<li class="nav-item">
-	     				<a class="nav-link" href="#">Logout</a>
+	     				<a class="nav-link" href="LogoutServlet">Logout</a>
 	   				</li>
 	   			<% } else { %>
 	   				<li class="nav-item">

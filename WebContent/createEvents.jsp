@@ -26,9 +26,15 @@
 	
 
 	<%
-		String username = (String)request.getSession().getAttribute("username");
-		if(username == null || username.trim().length() == 0) {
-			username= "";
+		String username = (String)session.getAttribute("username");
+		if (username == null) {
+			username = "";
+		}
+		boolean loggedIn = false;
+		if (username.equals("")) {
+			loggedIn = false;
+		} else {
+			loggedIn = true;
 		}
 	%>
 	<script>
@@ -73,19 +79,19 @@
  			
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav ml-auto">
-			<% if(username != "") { %>
+			<% if(loggedIn) { %>
    				<li class="nav-item">
-     				<a class="nav-link" href="#">Profile</a>
+     				<a class="nav-link" href="profile.jsp">Profile</a>
    				</li>
    				<li class="nav-item">
-     				<a class="nav-link" href="#">Logout</a>
+     				<a class="nav-link" href="LogoutServlet">Logout</a>
    				</li>
    			<% } else { %>
    				<li class="nav-item">
-     				<a class="nav-link" href="#">Login</a>
+     				<a class="nav-link" href="login.jsp">Login</a>
    				</li>
    				<li class="nav-item">
-     				<a class="nav-link" href="#">Register</a>
+     				<a class="nav-link" href="logout.jsp">Register</a>
    				</li>
    			<% } %>
    			</ul>
