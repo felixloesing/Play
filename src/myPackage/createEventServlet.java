@@ -7,13 +7,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import classes.DatabaseConnector;
 import classes.Event;
 import classes.User;
-/**
- * Servlet implementation class createEventServlet
- */
+
 @WebServlet("/createEventServlet")
 public class createEventServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -32,40 +34,57 @@ public class createEventServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		String name = request.getParameter("eventName");
-		String desc = request.getParameter("eventDesc");
-		String website = request.getParameter("eventWebsite");
-		String location = request.getParameter("eventLocation");
-		String expDate =  request.getParameter("expirationDate");
+		String name = request.getParameter("name");
+		String desc = request.getParameter("desc");
+		String website = request.getParameter("website");
+		String location = request.getParameter("location");
+		String expDate =  request.getParameter("expDate");
 		
 		String username = request.getParameter("username");
-		User creator = DatabaseConnector.getUser(username);
-		int creatorID = creator.getUserID();
+		if(username == null || username.trim().length() == 0) {
+			username = "";
+		}
+		int creatorID = 1;
+		
+		if(username != "") {
+			User creator = DatabaseConnector.getUser(username);
+			creatorID = creator.getUserID();
+		}
 		
 		String responseString = "";
 		
-		if(name == null || name.trim().length() == 0) {
+		if(name.equals("")) {
 			responseString = "Please enter an event name,";
 		}
-		else if(desc == null || desc.trim().length() == 0) {
+		else if(desc.equals("")) {
 			responseString = "Please enter a description for your event.";
 		}
-		else if(website == null || desc.trim().length() == 0) {
+		else if(website.equals("")) {
 			responseString = "Please enter a website for your event.";
 		}
-		else if(location == null || location.trim().length() == 0) {
+		else if(location.equals("")) {
 			responseString = "Please enter a location your event.";
 		}
-		else if(expDate == null || expDate.trim().length() == 0) {
+		else if(expDate.equals("")) {
 			responseString = "Please enter a date for your event";
 		}
 		else {
 			String latitude = "0";
 			String longitude = "0";
-			if(DatabaseConnector.createEvent(name, creatorID, latitude, longitude, desc, expDate, website)) {
-				
+			try {
+			    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+			    Date parsedDate = dateFormat.parse(expDate);
+			    Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
+			    DatabaseConnector.createEvent(name, creatorID, latitude, longitude, desc, timestamp, website);
+			} 
+			catch (ParseException e) {
+				System.out.println("Exception :" + e);
 			}
+			
 		}
+		
+		System.out.println("event status: " + responseString);
+		response.getWriter().write(responseString);
 	}
 
 	/**

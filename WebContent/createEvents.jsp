@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Home</title>
+	<title>Create Event</title>
 	
 	<link rel="stylesheet" href="bootstrap/bootstrap.min.css">
 	<link rel="stylesheet" href="fontawesome/all.min.css">
@@ -30,9 +30,8 @@
 			username= "";
 		}
 	%>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script>
-		function createEvent() {
+		function createNewEvent() {
 			eventName = document.getElementById('eventNameInput').value;
 			eventDesc = document.getElementById('eventDescInput').value;
 			eventWebsite = document.getElementById('websiteInput').value;
@@ -41,7 +40,7 @@
 			
 			$
 					.ajax({
-						url : "EventServlet",
+						url : "createEventServlet",
 						data : {
 							name : eventName,
 							desc : eventDesc,
@@ -123,23 +122,25 @@
                     	<span class="input-group-addon" data-target="#datetimepicker1" data-toggle="datetimepicker">
                        		<span class="fa fa-calendar"></span>
                     	</span>
-                    <script type="text/javascript">
-        				$(function() {
-          					$('#datetimepicker1').datetimepicker();
-       					 });
-      				</script>
+                    	<script>
+                    	$(function () {
+                    	    $('#datetimepicker1').datetimepicker({
+                    	        format: 'MM/DD/YYYY HH:mm'
+                    	    });
+                    	});
+                    	</script>
+                    
                </div>
            	</div>
 			</div>
 			
 			<small id="errorMessage" class="form-text text-muted">&nbsp;</small>
-			<button type="submit" class="btn btn-primary" onclick="return createEvent();">Create Event</button>
+			<button type="submit" class="btn btn-primary" onclick="return createNewEvent();">Create Event</button>
 		</form>
 
 
 	</div>
 
-	<script src="jquery/jquery-3.3.1.min.js" ></script>
 	<script src="bootstrap/bootstrap.bundle.min.js" ></script>
 </body>
 </html>
