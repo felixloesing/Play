@@ -177,6 +177,7 @@ public class DatabaseConnector {
 			psSize = conn.prepareStatement("SELECT COUNT(*) FROM Event");
 			rsSize = psSize.executeQuery();
 			int size = 0;
+			rsSize.next();
 			while(rsSize.next()) {
 				size = rs.getInt(1);
 			}
@@ -184,6 +185,7 @@ public class DatabaseConnector {
 			psTotal = conn.prepareStatement("SELECT SUM(upvotes) FROM Event");
 			rsTotal = psTotal.executeQuery();
 			int total = 0;
+			rsTotal.next();
 			while(rsTotal.next()) {
 				total = rs.getInt(1);
 			}
@@ -221,6 +223,7 @@ public class DatabaseConnector {
 			}
 		} catch (SQLException sqle) {
 			System.out.println ("SQLException: " + sqle.getMessage());
+			sqle.printStackTrace();
 		} catch (ClassNotFoundException cnfe) {
 			System.out.println ("CNFException: " + cnfe.getMessage());
 		} finally {
