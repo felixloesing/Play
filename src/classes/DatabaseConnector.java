@@ -294,8 +294,8 @@ public class DatabaseConnector {
 			conn = DriverManager.getConnection(DB_URL);
 			ps = conn.prepareStatement("SELECT * "
 					+ "FROM Comment c "
-					+ "LEFT JOIN User u ON c.creatorID=u.userID"
-					+ "WHERE Comment.eventID=?");
+					+ "LEFT JOIN User u ON c.creatorID=u.userID "
+					+ "WHERE c.eventID=?");
 			ps.setInt(1, eventID);
 			rs = ps.executeQuery();
 			while(rs.next()) {
