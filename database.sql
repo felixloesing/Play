@@ -2,9 +2,9 @@ DROP DATABASE if exists Play;
 CREATE DATABASE Play;
 USE Play;
 
-SET @@global.time_zone = '+00:00';
+SET @@global.time_zone = '-07:00';
 
-SET @@session.time_zone = '+00:00';
+SET @@session.time_zone = '-07:00';
 
 CREATE TABLE `User` (
   `userID` INT NOT NULL AUTO_INCREMENT,
