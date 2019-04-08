@@ -10,7 +10,6 @@ public class Event {
 	private User creator;
 	private float latitude;
 	private float longitude;
-	private Date createdAt;
 	private int upvotes;
 	private String description;
 	private Date expirationDate;
@@ -35,7 +34,6 @@ public class Event {
 		this.creator = new User(creatorID, username); // join in username
 		this.latitude = Float.parseFloat(latitude);
 		this.longitude = Float.parseFloat(longitude);
-		this.createdAt = createdAt; // make sure to ask for a timestamp
 		this.upvotes = upvotes;
 		this.description = description;
 		this.expirationDate = expirationDate;
@@ -59,9 +57,6 @@ public class Event {
 		return longitude;
 	}
 
-	public Date getCreatedAt() {
-		return createdAt;
-	}
 
 	public int getUpvotes() {
 		return upvotes;
