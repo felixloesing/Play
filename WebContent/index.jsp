@@ -107,7 +107,7 @@
 										
 									});
 									marker.addListener('click', function() {
-								          alert(marker.get('store_id') + marker.get('store_username') + marker.get('store_upvotes'));
+								          alert("ID: " + marker.get('store_id'));
 								        });
 							    }
 							return false;
