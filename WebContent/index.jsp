@@ -77,7 +77,6 @@
 						
 					},
 					success : function(result) {
-						console.log(result);
 						if (result === "") {
 						} else {
 							JSONString = result;
@@ -94,8 +93,22 @@
 										position: myLatLng,
 										map: map,
 										
-										store_id: events[i].eventID
+										store_id: events[i].eventID,
+										store_creatorID: events[i].creator.userID,
+										store_username: events[i].creator.username,
+										store_latitude: events[i].latitude,
+										store_longitude: events[i].longitude,
+										store_createdAt: events[i].createdAt,
+										store_upvotes: events[i].upvotes,
+										store_description: events[i].description,
+										store_expirationDate: events[i].expirationDate,
+										store_website: events[i].website,
+										store_comments: events[i].comments
+										
 									});
+									marker.addListener('click', function() {
+								          alert(marker.get('store_id') + marker.get('store_username') + marker.get('store_upvotes'));
+								        });
 							    }
 							return false;
 						}
