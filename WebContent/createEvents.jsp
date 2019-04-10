@@ -45,6 +45,7 @@
 			eventDesc = document.getElementById('eventDescInput').value;
 			eventWebsite = document.getElementById('websiteInput').value;
 			expirationDate = document.getElementById('datetimepickerInput').value;
+			eventCategory = document.getElementById('eventCategoryInput').value;
 			
 			$
 					.ajax({
@@ -55,7 +56,8 @@
 							website : eventWebsite,
 							lat : latitude,
 							lng : longitude,
-							expDate : expirationDate
+							expDate : expirationDate,
+							category : eventCategory
 						},
 						success : function(result) {
 							console.log(result);
@@ -117,6 +119,17 @@
 					placeholder="Enter website for event">
 			</div>
 			
+			<div class="form-group">
+		    <label for="eventCategoryLabel">Choose a Categoy...</label>
+		    <select class="form-control" id="eventCategoryInput">
+		      <option>Art</option>
+		      <option>Concert</option>
+		      <option>Food</option>
+		      <option>Beach</option>
+		      <option>Party</option>
+		      <option>Market</option>
+		    </select>
+		  </div>	
 		
 			<div class="container">
 				<label for="eventDateInput">Date/Time</label>

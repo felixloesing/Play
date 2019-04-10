@@ -270,7 +270,8 @@ public class DatabaseConnector {
 			String longitude,
 			String description,
 			Timestamp expirationDate,
-			String website) {
+			String website,
+			String category) {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		int rs = 0;
@@ -279,8 +280,8 @@ public class DatabaseConnector {
 			conn = DriverManager.getConnection(DB_URL);
 			ps = conn.prepareStatement("INSERT INTO Event "
 					+ "(name, creatorID, latitude, longitude, "
-					+ "description, expirationDate, website) "
-					+ "VALUES (?, ?, ?, ?, ?, ?, ?)");
+					+ "description, expirationDate, website, category) "
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 			ps.setString(1, name);
 			ps.setInt(2, creatorID);
 			ps.setString(3, latitude);
@@ -288,6 +289,7 @@ public class DatabaseConnector {
 			ps.setString(5, description);
 			ps.setTimestamp(6, expirationDate);
 			ps.setString(7, website);
+			ps.setString(8, category);
 			rs = ps.executeUpdate();
 		} catch (SQLException sqle) {
 			System.out.println ("SQLException: " + sqle.getMessage());
