@@ -278,7 +278,8 @@ public class DatabaseConnector {
 			conn = DriverManager.getConnection(DB_URL);
 			ps = conn.prepareStatement("SELECT * "
 					+ "FROM Event e "
-					+ "WHERE eventID=?");
+					+ "LEFT JOIN User u ON e.creatorID=u.userID "
+					+ "WHERE e.eventID=?");
 			ps.setInt(1, eventID);
 			rs = ps.executeQuery();
 			
