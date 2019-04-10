@@ -146,15 +146,20 @@
                     
                </div>
            	</div>
-			<label for="eventLocationInput">Location</label>
-			<div id="floating-panel">
-      			<input id="address" type="textbox" value="Los Angeles">
-      				<input id="submit" type="button" value="Geocode">
-    		</div>
+           	
+           	<form method="POST" onsubmit="return false;">
+				<label for="eventLocationInput">Location</label>
+				<div id="floating-panel">
+	      			<input id="address" type="textbox" value="Los Angeles">
+	      			<button id="submit" type="submit" value="Geocode" style="display:none;">
+	    		</div>
+    		</form>
     		<div id="map"></div>
     		
     		<small id="errorMessage" class="form-text text-muted">&nbsp;</small>
 			<button type="submit" class="btn btn-primary" onclick="return createNewEvent();">Create Event</button>
+			<br/>
+			<br/>
     	</form>
     		<script>
       			function initMap() {
