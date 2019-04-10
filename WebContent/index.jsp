@@ -123,6 +123,7 @@
 										store_expirationDate: events[i].expirationDate,
 										store_website: events[i].website,
 										store_colorCode: events[i].colorCode,
+										store_category: events[i].category,
 										store_comments: events[i].comments
 										
 									});

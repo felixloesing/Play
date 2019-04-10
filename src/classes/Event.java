@@ -15,6 +15,7 @@ public class Event {
 	private Date expirationDate;
 	private String website;
 	private int colorCode;
+	private String category;
 	private ArrayList<Comment> comments;
 	
 	
@@ -29,7 +30,8 @@ public class Event {
 			int upvotes,
 			String description,
 			Timestamp expirationDate,
-			String website) {
+			String website,
+			String category) {
 		this.eventID = eventID;
 		this.name = name;
 		this.creator = new User(creatorID, username); // join in username
@@ -40,6 +42,7 @@ public class Event {
 		this.expirationDate = expirationDate;
 		this.website = website;
 		this.colorCode = 0;
+		this.category = category;
 		this.comments = DatabaseConnector.getComments(eventID);
 	}
 
@@ -82,6 +85,10 @@ public class Event {
 
 	public ArrayList<Comment> getComments() {
 		return comments;
+	}
+	
+	public String getCategory() {
+		return category;
 	}
 	
 	public int getColorCOde() {
