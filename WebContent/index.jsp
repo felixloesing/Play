@@ -39,7 +39,9 @@
 				<ul class="navbar-nav ml-auto">
 				<% if(loggedIn) { %>
 	   				<li class="nav-item">
-	     				<a class="nav-link" href="profile.jsp">Profile</a>
+	     				<span class="navbar-text">
+<%--     						Hi, <%= username %>!  --%>
+  						</span>
 	   				</li>
 	   				<li class="nav-item">
 	     				<a class="nav-link" href="LogoutServlet">Logout</a>
