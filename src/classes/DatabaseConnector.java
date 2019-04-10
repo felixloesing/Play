@@ -203,7 +203,8 @@ public class DatabaseConnector {
 						rs.getInt("upvotes"),
 						rs.getString("description"),
 						rs.getTimestamp("expirationDate"),
-						rs.getString("website"));
+						rs.getString("website"),
+						rs.getString("category"));
 				if (up == 0) {
 					event.setColorCode(0);
 				} else {
