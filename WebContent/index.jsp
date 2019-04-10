@@ -128,7 +128,8 @@
 										
 									});
 									marker.addListener('click', function() {
-										alert("ID: " + marker.get('store_id') + '\n' + 'Upvotes: ' + marker.get('store_upvotes'));
+										//alert("ID: " + marker.get('store_id') + '\n' + 'Upvotes: ' + marker.get('store_upvotes'));
+										location.href = "DetailServlet?eventID=" + marker.get('store_id');
 								    });
 							    }
 							return false;
