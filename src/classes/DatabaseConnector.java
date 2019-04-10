@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class DatabaseConnector {
-	private static final String DB_URL = "jdbc:mysql://localhost/play?user=root&password=root&useLegacyDatetimeCode=false&serverTimezone=America/Los_Angeles";
+	private static final String DB_URL = "jdbc:mysql://localhost/play?user=root&password=Jumble52&useLegacyDatetimeCode=false&serverTimezone=America/Los_Angeles";
 		
 	public static User login(String username, String password) {
 		Connection conn = null;
@@ -171,7 +171,7 @@ public class DatabaseConnector {
 			conn = DriverManager.getConnection(DB_URL);
 			ps = conn.prepareStatement("SELECT * "
 					+ "FROM Event e "
-					+ "LEFT JOIN User u ON e.creatorID=u.userID");
+					+ "LEFT JOIN User u ON e.creatorID=u.userID WHERE e.expirationDate>CURRENT_TIMESTAMP");
 			rs = ps.executeQuery();
 			
 			psSize = conn.prepareStatement("SELECT COUNT(*) as count FROM Event");
