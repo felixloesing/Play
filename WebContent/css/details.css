@@ -1,0 +1,13 @@
+html, body {
+	height: 100%;
+	background-image: url('../Group 2 (1).png');
+}
+
+nav {
+	background-color: #262F3D;
+}
+
+#img-placeholder {
+	/* height: 25rem; */
+	background-color: grey;
+}
