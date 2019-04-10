@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class DatabaseConnector {
-	private static final String DB_URL = "jdbc:mysql://localhost/play?user=root&password=root&useLegacyDatetimeCode=false&serverTimezone=America/Los_Angeles";
+	private static final String DB_URL = "jdbc:mysql://localhost/play?user=root&password=Jumble52&useLegacyDatetimeCode=false&serverTimezone=America/Los_Angeles";
 		
 	public static User login(String username, String password) {
 		Connection conn = null;
@@ -449,6 +449,36 @@ public class DatabaseConnector {
 		
 		return rs > 0;
 	}
+	public boolean downVotes(int eventID) {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		int rs = 0;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = DriverManager.getConnection(DB_URL);
+			ps = conn.prepareStatement("UPDATE Event SET upvotes = upvotes - 1 "
+					+ "WHERE eventID=?" + "and upvotes > 0");
+			ps.setInt(1, eventID);
+			rs = ps.executeUpdate();
+		} catch (SQLException sqle) {
+			System.out.println ("SQLException: " + sqle.getMessage());
+		} catch (ClassNotFoundException cnfe) {
+			System.out.println ("CNFException: " + cnfe.getMessage());
+		} finally {
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+		}
+		return rs > 0;
+	}
+	
 	
 	public static ArrayList<Comment> getComments(int eventID) {
 		Connection conn = null;
