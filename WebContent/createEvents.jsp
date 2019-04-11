@@ -59,73 +59,76 @@
 		</nav>
 
 		<div class="w-50 mx-auto mt-5">
-			<form method="POST" onsubmit="return false;">
-				<div class="form-group">
-					<label for="eventNameInput">Event Name</label>
-					<input type="text" class="form-control" id="eventNameInput"
-						placeholder="Enter name of event">
-				</div>
-
-				<div class="form-group">
-					<label for="eventDescInput">Description</label>
-					<textarea class="form-control" id="eventDescInput" rows="3"
-						placeholder="Enter a description of your event."></textarea>
-				</div>
-
-				<label for="websiteInput">Website</label>
-				<div class="input-group mb-3">
-					<div class="input-group-prepend">
-						<span class="input-group-text" id="basic-addon3">https://</span>
+			<div class="border p-5 bg-white rounded">
+				<h2 class="text-center">Create Event</h2>
+				<form method="POST" onsubmit="return false;">
+					<div class="form-group">
+						<label for="eventNameInput">Event Name</label>
+						<input type="text" class="form-control" id="eventNameInput"
+							placeholder="Enter name of event">
 					</div>
-					<input type="text" class="form-control" id="websiteInput"
-						aria-describedby="basic-addon3"
-						placeholder="Enter website for event">
-				</div>
-
-				<div class="form-group">
-					<label for="eventCategoryLabel">Choose a Category...</label> <select
-						class="form-control" id="eventCategoryInput">
-						<option>Art</option>
-						<option>Concert</option>
-						<option>Food</option>
-						<option>Beach</option>
-						<option>Party</option>
-						<option>Market</option>
-					</select>
-				</div>
 	
-				<label for="eventDateInput">Date/Time</label>
-				<div class="form-group">
-					<div class="input-group date" id="datetimepicker1"
-						data-target-input="nearest">
-						<input type="text" class="form-control" id="datetimepickerInput"
-							data-target="#datetimepicker1" />
-						<div class="input-group-append" data-target="#datetimepicker1"
-							data-toggle="datetimepicker">
-							<div class="input-group-text">
-								<i class="far fa-calendar"></i>
-							</div>
+					<div class="form-group">
+						<label for="eventDescInput">Description</label>
+						<textarea class="form-control" id="eventDescInput" rows="3"
+							placeholder="Enter a description of your event."></textarea>
+					</div>
+	
+					<label for="websiteInput">Website</label>
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="basic-addon3">https://</span>
 						</div>
-	
+						<input type="text" class="form-control" id="websiteInput"
+							aria-describedby="basic-addon3"
+							placeholder="Enter website for event">
 					</div>
-				</div>
 	
-				<label for="eventLocationInput">Location</label>
-				<div class="row">
-					<div class="form-group col-8">
-						<input type="email" class="form-control" id="eventLocationInput" placeholder="Choose a location" readonly>
+					<div class="form-group">
+						<label for="eventCategoryLabel">Choose a Category...</label> <select
+							class="form-control" id="eventCategoryInput">
+							<option>Art</option>
+							<option>Concert</option>
+							<option>Food</option>
+							<option>Beach</option>
+							<option>Party</option>
+							<option>Market</option>
+						</select>
 					</div>
-					<div class="col-4">
-						<button class="btn btn-dark w-100" data-toggle="modal" data-target="#mapModal">Location</button>
+		
+					<label for="eventDateInput">Date/Time</label>
+					<div class="form-group">
+						<div class="input-group date" id="datetimepicker1"
+							data-target-input="nearest">
+							<input type="text" class="form-control" id="datetimepickerInput"
+								data-target="#datetimepicker1" />
+							<div class="input-group-append" data-target="#datetimepicker1"
+								data-toggle="datetimepicker">
+								<div class="input-group-text">
+									<i class="far fa-calendar"></i>
+								</div>
+							</div>
+		
+						</div>
 					</div>
-				</div>
-	
-				<small id="errorMessage" class="form-text text-muted">&nbsp;</small>
-				<div class="text-center mb-4">
-					<button type="submit" class="btn btn-dark text-center"
-						onclick="return createNewEvent();">Create Event</button>
-				</div>
-			</form>
+		
+					<label for="eventLocationInput">Location</label>
+					<div class="row">
+						<div class="form-group col-8">
+							<input type="email" class="form-control" id="eventLocationInput" placeholder="Choose a location" readonly>
+						</div>
+						<div class="col-4">
+							<button class="btn btn-dark w-100" data-toggle="modal" data-target="#mapModal">Location</button>
+						</div>
+					</div>
+		
+					<small id="errorMessage" class="form-text text-muted">&nbsp;</small>
+					<div class="text-center mb-4">
+						<button type="submit" class="btn btn-dark text-center"
+							onclick="return createNewEvent();">Create Event</button>
+					</div>
+				</form>
+			</div>
 		</div>
 	</div>
 	

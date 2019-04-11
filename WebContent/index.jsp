@@ -447,12 +447,12 @@
 			// Create add event button
 			<% if (loggedIn) { %>
 				var controlUI = document.createElement('button');
-				controlUI.classList.add('w-50');
+				controlUI.classList.add('w-75');
 				controlUI.classList.add('btn');
 				controlUI.classList.add('btn-light');
 				controlUI.style.margin = '10px';
 				controlUI.title = 'Click to add a new event';
-				controlUI.innerHTML = 'Add Event';
+				controlUI.innerHTML = 'Create Event';
 				controlUI.index = 1;
 				
 				controlUI.addEventListener('click', function() {
