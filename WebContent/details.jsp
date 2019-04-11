@@ -84,17 +84,19 @@
 	   	
 		<div class="w-75 my-5 mx-auto bg-light">
 			<div class="row mx-0">
-				<div id="img-placeholder" class="col-8">
-						<img src="categoryPhotos/<%=e.getCategory()%>.jpg">
+				<div id="img-placeholder" class="col-8 p-0">
+						<img src="categoryPhotos/<%=e.getCategory()%>.jpg" class="img-fluid">
 				</div>
-				<div class="col-4">
+				<div class="col-4 d-flex flex-column justify-content-between">
 					<p class="h4 mt-2">
 						<%= date.getDay() %> <br/>
 						<%= date.getMonth() %>
 					</p>
-					<h3 class="mt-4"><%= e.getName() %></h3>
-					<p class="h5 text-muted"><%= e.getCreator().getUsername() %></p>
-					<p class="mt-5">Begins at <%= date.getHour()%>:<%=date.getMinute() %></p>
+					<div>
+						<h3 class="mb-2"><%= e.getName() %></h3>
+						<p class="h5 text-muted">By <%= e.getCreator().getUsername() %></p>
+					</div>
+					<p class="mb-1">Begins at <%= date.getHour()%>:<%=date.getMinute() %></p>
 				</div>
 			</div>
 			
