@@ -1,3 +1,7 @@
 #map {
 	height: 425px;
 }
+
+.pac-container {
+	z-index: 10000 !important;
+}
