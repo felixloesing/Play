@@ -83,54 +83,17 @@
 				</div>
 				<div class="col-4">
 					<p class="h4 mt-2">
-						Apr<br>
-						12
+						<%= e.getExpirationDate() %>
 					</p>
-					<h3 class="mt-4">NOCHELLA PARTY @ GLOBE THEATRE 18+ Friday Night / EVERYONE FREE until 10:30</h3>
-					<p class="h5 text-muted">by SUPREME GROUP</p>
-					<p class="mt-5">$0 - $5</p>
+					<h3 class="mt-4"><%= e.getName() %></h3>
+					<p class="h5 text-muted"><%= e.getCreator().getUsername() %></p>
+					<p class="mt-5"><!-- price range of event? --></p>
 				</div>
 			</div>
 			
 			<div class="w-75 mx-auto mt-4 pb-4">
 				<p><strong>Description</strong></p>
-				<p class="text-muted">Get Ready for a crazy night!
-
-The Largest 18+ Friday Party Happening in SoCal! One Night Special!
-
-**** NOCHELLA ****
-
-inside
-
-**** THE GLOBE THEATRE ****
-
-in Downtown Los Angeles
-
-Friday April 12th 2019
-
-740 S. Broadway 90014
-
-18+ Trendy / Fashionable Attire
-
-10pm-2am
-
-**** EVERYONE IS FREE until 1030pm! MUST RSVP ****
-
-**** 21+ FREE until MIDNIGHT! MUST RSVP ****
-
-After 1030pm Cover Charge is Applied
-
-Bottle Service is Available / Text "Globe" to 310.651.0599
-
-Hip Hop / Reggaeton / Top 40 Music by SoCals best DJs
-
-Not Going to "Cochella", No Problem! Come expereince first hand the vibes inside the Globe Theatre for a one of a kind night!
-
-The Globe Theatre boasts a stunning and luxurious interior with 1500 capacity and incredible state of the art sound and light system!
-
-Only 18+ party in Los Angeles! Come revel and embrace the Coachella spirit!!
-
-Dont Miss Out!!</p>
+				<p class="text-muted"><%= e.getDescription() %></p>
 				<a href="<%= e.getWebsite() %>" class="mb-5"><strong>More info at...</strong></a>
 			</div>
 			<!-- TODO upvote section  -->
