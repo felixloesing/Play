@@ -103,7 +103,7 @@
 			<div class="w-75 mx-auto mt-4 pb-4">
 				<p><strong>Description</strong></p>
 				<p class="text-muted"><%= e.getDescription() %></p>
-				<a href="<%= e.getWebsite() %>" class="mb-5"><strong>More info at...</strong></a>
+				<a href="http://<%= e.getWebsite() %>" class="mb-5"><strong>More info at...</strong></a>
 			</div>
 			<!-- TODO upvote section  -->
 			<!-- TODO comment section  -->

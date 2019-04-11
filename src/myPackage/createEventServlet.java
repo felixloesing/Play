@@ -6,6 +6,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import java.util.Date;
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -42,7 +44,8 @@ public class createEventServlet extends HttpServlet {
 		String expDate =  request.getParameter("expDate");
 		String category = request.getParameter("category");
 		
-		String username = request.getParameter("username");
+		HttpSession session = request.getSession();
+		String username = (String)session.getAttribute("username");
 		if(username == null || username.trim().length() == 0) {
 			username = "";
 		}
