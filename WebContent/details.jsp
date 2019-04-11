@@ -96,14 +96,14 @@
 						<h3 class="mb-2"><%= e.getName() %></h3>
 						<p class="h5 text-muted">By <%= e.getCreator().getUsername() %></p>
 					</div>
-					<p class="mb-1">Begins at <%= date.getHour()%>:<%=date.getMinute() %></p>
+					<p class="mb-1">Begins at <%= date.getHour()%>:<%=String.format("%02d", date.getMinute()) %></p>
 				</div>
 			</div>
 			
 			<div class="w-75 mx-auto mt-4 pb-4">
 				<p><strong>Description</strong></p>
 				<p class="text-muted"><%= e.getDescription() %></p>
-				<a href="http://<%= e.getWebsite() %>" class="mb-5"><strong>More info at...</strong></a>
+				<a target="_blank" rel="noopener noreferrer" href="http://<%= e.getWebsite() %>" class="mb-5"><strong>More info at...</strong></a>
 			</div>
 			<!-- TODO upvote section  -->
 			<!-- TODO comment section  -->
