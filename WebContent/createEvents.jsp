@@ -58,7 +58,7 @@
 			</div>
 		</nav>
 
-		<div class="w-75 mx-auto mt-5">
+		<div class="w-50 mx-auto mt-5">
 			<form method="POST" onsubmit="return false;">
 				<div class="form-group">
 					<label for="eventNameInput">Event Name</label>
@@ -110,15 +110,15 @@
 					</div>
 				</div>
 	
-				<form method="POST" onsubmit="return false;">
-					<label for="eventLocationInput">Location</label>
-					<div id="floating-panel">
-						<input id="address" type="textbox" value="Los Angeles">
-						<button id="submit" type="submit" value="Geocode"
-							style="display: none;">
+				<label for="eventLocationInput">Location</label>
+				<div class="row">
+					<div class="form-group col-8">
+						<input type="email" class="form-control" id="eventLocationInput" placeholder="Choose a location" readonly>
 					</div>
-				</form>
-				<div id="map"></div>
+					<div class="col-4">
+						<button class="btn btn-dark w-100" data-toggle="modal" data-target="#mapModal">Location</button>
+					</div>
+				</div>
 	
 				<small id="errorMessage" class="form-text text-muted">&nbsp;</small>
 				<div class="text-center mb-4">
@@ -126,6 +126,16 @@
 						onclick="return createNewEvent();">Create Event</button>
 				</div>
 			</form>
+		</div>
+	</div>
+	
+	<div class="modal fade bd-example-modal-xl" id="mapModal" tabindex="-1" role="dialog" aria-labelledby="mapModal" aria-hidden="true">
+		<div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div id="map"></div>
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -137,6 +147,7 @@
 	<script>
 		var latitude;
 		var longitude;
+		var place;
 		function createNewEvent() {
 			eventName = document.getElementById('eventNameInput').value;
 			eventDesc = document.getElementById('eventDescInput').value;
@@ -173,6 +184,7 @@
 			});
 		});
 
+		var map;
 		function initMap() {
 			map = new google.maps.Map(document.getElementById('map'), {
 				center : {
@@ -471,50 +483,98 @@
 						  }
 						]
 			});
-			var geocoder = new google.maps.Geocoder();
+			
+			var controlUI = document.createElement('button');
+			controlUI.classList.add('btn');
+			controlUI.classList.add('btn-light');
+			controlUI.style.margin = '10px';
+			controlUI.innerHTML = 'Choose this location';
+			controlUI.index = 1;
+			
+			controlUI.addEventListener('click', function() {
+				$("#eventLocationInput").val(place.formatted_address);
+				latitude = place.geometry.location.lat();
+				longitude = place.geometry.location.lng();
+				$("#mapModal").modal("hide");
+			});
+			
+			var input = document.createElement('input');
+			input.classList.add('form-control');
+			input.type = 'text';
+			input.placeholder = 'Search';
+			input.style.marginTop = '10px';
+			input.style.marginLeft = '10px';
+			var searchBox = new google.maps.places.SearchBox(input);
+			
+			// one div to rule them all
+			var div = document.createElement('div');
+			div.classList.add('d-flex');
+			div.classList.add('flex-column');
+			div.appendChild(input);
+			div.appendChild(controlUI);
+			
+			// push div to map
+			map.controls[google.maps.ControlPosition.TOP_LEFT]
+				.push(div);
+			
+			// Bias the SearchBox results towards current map's viewport.
+			map.addListener('bounds_changed', function() {
+				searchBox.setBounds(map.getBounds());
+			});
+			
+			var markers = [];
+			searchBox.addListener('places_changed', function() {
+				var places = searchBox.getPlaces();
 
-			document.getElementById('submit').addEventListener('click',
-				function() {
-					geocodeAddress(geocoder, map);
+				if (places.length == 0) {
+					return;
 				}
-			);
-		}
+				
+				place = places[0];
 
-		var markersArray = [];
-		function geocodeAddress(geocoder, resultsMap) {
-			var address = document.getElementById('address').value;
-			geocoder.geocode({ 'address': address },
-				function(results, status) {
-					if (status === 'OK') {
-						resultsMap
-								.setCenter(results[0].geometry.location);
-						clearMarkers();
-						var marker = new google.maps.Marker({
-							map : resultsMap,
-							position : results[0].geometry.location
-						});
-						markersArray.push(marker);
-						latitude = results[0].geometry.location
-								.lat();
-						longitude = results[0].geometry.location
-								.lng();
-					} else {
-						alert('Geocode was not successful for the following reason: '
-								+ status);
+				// Clear out the old markers.
+				markers.forEach(function(marker) {
+					marker.setMap(null);
+				});
+				markers = [];
+
+				// For each place, get the icon, name and location.
+				var bounds = new google.maps.LatLngBounds();
+				places.forEach(function(place) {
+					if (!place.geometry) {
+						console.log("Returned place contains no geometry");
+						return;
 					}
-				}
-			);
-		}
+					var icon = {
+						url : place.icon,
+						size : new google.maps.Size(71, 71),
+						origin : new google.maps.Point(0, 0),
+						anchor : new google.maps.Point(17, 34),
+						scaledSize : new google.maps.Size(25, 25)
+					};
 
-		function clearMarkers() {
-			for (var i = 0; i < markersArray.length; i++) {
-				markersArray[i].setMap(null);
-			}
-			markersArray.length = 0;
+					// Create a marker for each place.
+					markers.push(new google.maps.Marker({
+						map : map,
+						icon : icon,
+						title : place.name,
+						position : place.geometry.location
+					}));
+
+					if (place.geometry.viewport) {
+						// Only geocodes have viewport.
+						bounds.union(place.geometry.viewport);
+					} else {
+						bounds.extend(place.geometry.location);
+					}
+				});
+				map.fitBounds(bounds);
+			});
 		}
 	</script>
-	<script async defer
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjFhnU6F3rpushBW0hf6kHMUzXVXPn2Xo&callback=initMap">
+	<script
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARjj3ad8bc8Fh1K_d3khuBu_3AbOc_mW0&libraries=places&callback=initMap"
+		async defer></script>
 	</script>
 </body>
 </html>
