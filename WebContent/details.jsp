@@ -3,6 +3,8 @@
 <!DOCTYPE html>
 
 <%@page import="classes.Event" %>
+<%@page import="classes.EventDateParser" %>
+<%@page import="java.util.Date" %>
 <%
 	String username = (String)session.getAttribute("username");
 	if (username == null) {
@@ -19,6 +21,10 @@
 		RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
 	   	rd.forward(request, response);
 	}
+
+	Date eventDate = e.getExpirationDate();
+	EventDateParser date = new EventDateParser(eventDate);
+
 	
 %>
 
@@ -79,15 +85,16 @@
 		<div class="w-75 my-5 mx-auto bg-light">
 			<div class="row mx-0">
 				<div id="img-placeholder" class="col-8">
-					<!-- <img src="event-backgrounds/dinner.jpg"> -->
+						<img src="categoryPhotos/<%=e.getCategory()%>.jpg">
 				</div>
 				<div class="col-4">
 					<p class="h4 mt-2">
-						<%= e.getExpirationDate() %>
+						<%= date.getDay() %> <br/>
+						<%= date.getMonth() %>
 					</p>
 					<h3 class="mt-4"><%= e.getName() %></h3>
 					<p class="h5 text-muted"><%= e.getCreator().getUsername() %></p>
-					<p class="mt-5"><!-- price range of event? --></p>
+					<p class="mt-5">Begins at <%= date.getHour()%>:<%=date.getMinute() %></p>
 				</div>
 			</div>
 			
