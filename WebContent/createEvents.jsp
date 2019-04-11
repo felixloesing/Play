@@ -58,7 +58,7 @@
 			</div>
 		</nav>
 
-		<div class="w-75 mx-auto mt-5">
+		<div class="w-50 mx-auto mt-5">
 			<form method="POST" onsubmit="return false;">
 				<div class="form-group">
 					<label for="eventNameInput">Event Name</label>
@@ -110,15 +110,15 @@
 					</div>
 				</div>
 	
-				<form method="POST" onsubmit="return false;">
-					<label for="eventLocationInput">Location</label>
-					<div id="floating-panel">
-						<input id="address" type="textbox" value="Los Angeles">
-						<button id="submit" type="submit" value="Geocode"
-							style="display: none;">
+				<label for="eventLocationInput">Location</label>
+				<div class="row">
+					<div class="form-group col-8">
+						<input type="email" class="form-control" id="eventLocationInput" placeholder="Choose a location" readonly>
 					</div>
-				</form>
-				<div id="map"></div>
+					<div class="col-4">
+						<button class="btn btn-dark w-100" data-toggle="modal" data-target="#mapModal">Location</button>
+					</div>
+				</div>
 	
 				<small id="errorMessage" class="form-text text-muted">&nbsp;</small>
 				<div class="text-center mb-4">
@@ -126,6 +126,16 @@
 						onclick="return createNewEvent();">Create Event</button>
 				</div>
 			</form>
+		</div>
+	</div>
+	
+	<div class="modal fade bd-example-modal-xl" id="mapModal" tabindex="-1" role="dialog" aria-labelledby="mapModal" aria-hidden="true">
+		<div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div id="map"></div>
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -471,46 +481,17 @@
 						  }
 						]
 			});
-			var geocoder = new google.maps.Geocoder();
-
-			document.getElementById('submit').addEventListener('click',
-				function() {
-					geocodeAddress(geocoder, map);
-				}
-			);
+			
+			map.addListener('click', function(e) {
+				closeModal(e.latLng);
+			});
+			
+			//var geocoder = new google.maps.Geocoder();
 		}
-
-		var markersArray = [];
-		function geocodeAddress(geocoder, resultsMap) {
-			var address = document.getElementById('address').value;
-			geocoder.geocode({ 'address': address },
-				function(results, status) {
-					if (status === 'OK') {
-						resultsMap
-								.setCenter(results[0].geometry.location);
-						clearMarkers();
-						var marker = new google.maps.Marker({
-							map : resultsMap,
-							position : results[0].geometry.location
-						});
-						markersArray.push(marker);
-						latitude = results[0].geometry.location
-								.lat();
-						longitude = results[0].geometry.location
-								.lng();
-					} else {
-						alert('Geocode was not successful for the following reason: '
-								+ status);
-					}
-				}
-			);
-		}
-
-		function clearMarkers() {
-			for (var i = 0; i < markersArray.length; i++) {
-				markersArray[i].setMap(null);
-			}
-			markersArray.length = 0;
+		
+		function closeModal(latLng) {
+			$("#eventLocationInput").val(latLng.lat() + "," + latLng.lng());
+			$("#mapModal").modal("hide");
 		}
 	</script>
 	<script async defer
