@@ -110,9 +110,11 @@
 			<div class="w-75 mx-auto mt-4 pb-4">
 				<p><strong>Comments</strong></p>
 				<p id="comments" class="text-muted"><%= commentString %></p>
-				<div class="row">
+				<div class="input-group mb-3">
 					<input type="text" class="form-control" id="eventNameInput" placeholder="Write Comment">
-					<button class="btn btn-dark w-50" data-toggle="modal" data-target="">Comment</button>
+					<div class="input-group-append">
+						<button class="btn btn-dark" data-toggle="modal" data-target="">Comment</button>
+					</div>
 				</div>
 			</div>
 			<!-- TODO upvote section  -->
