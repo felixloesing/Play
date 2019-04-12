@@ -10,12 +10,10 @@ import javax.servlet.http.HttpSession;
 
 import java.util.Date;
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import classes.DatabaseConnector;
-import classes.Event;
 import classes.User;
 
 @WebServlet("/createEventServlet")

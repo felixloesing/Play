@@ -31,6 +31,8 @@ public class LoginServlet extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		
+		String UsernameString = DatabaseConnector.getUser(username).getUsername();
+		
 		String responseString = "";
 		if (username.equals("")) {
 			responseString = "Please enter your username.";
@@ -48,8 +50,8 @@ public class LoginServlet extends HttpServlet {
 			} else {
 				responseString = "";
 				HttpSession session = request.getSession();
-				session.setAttribute("username", username);
-				int userID = DatabaseConnector.getUser(username).getUserID();
+				session.setAttribute("username", UsernameString);
+				String userID = String.valueOf(DatabaseConnector.getUser(username).getUserID());
 				session.setAttribute("userID", userID);
 			}
 		}
