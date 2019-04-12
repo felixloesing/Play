@@ -44,10 +44,9 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav ml-auto">
 					<% if(loggedIn) { %>
-					<li class="nav-item"><a class="nav-link" href="profile.jsp">Profile</a>
-					</li>
-					<li class="nav-item"><a class="nav-link" href="LogoutServlet">Logout</a>
-					</li>
+					<li class="nav-item d-flex" style="color: rgba(255,255,255,.5)">
+	     				Hi, <%= username %> (<a class="nav-link p-0" href="LogoutServlet">logout</a>)
+	   				</li>
 					<% } else { %>
 					<li class="nav-item"><a class="nav-link" href="login.jsp">Login</a>
 					</li>
