@@ -53,13 +53,8 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav ml-auto">
 				<% if(loggedIn) { %>
-	   				<li class="nav-item">
-	     				<span class="navbar-text">
-<%--     						Hi, <%= username %>!  --%>
-  						</span>
-	   				</li>
-	   				<li class="nav-item">
-	     				<a class="nav-link" href="LogoutServlet">Logout</a>
+	   				<li class="nav-item d-flex" style="color: rgba(255,255,255,.5)">
+	     				Hi, <%= username %> (<a class="nav-link p-0" href="LogoutServlet">logout</a>)
 	   				</li>
 	   			<% } else { %>
 	   				<li class="nav-item">
