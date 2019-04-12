@@ -1,3 +1,5 @@
+<%@page import="classes.Comment"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -24,7 +26,12 @@
 
 	Date eventDate = e.getExpirationDate();
 	EventDateParser date = new EventDateParser(eventDate);
-
+	
+	String commentString = "";
+	ArrayList<Comment> c = e.getComments();
+	for (int i = 0; i < c.size(); i ++) {
+		commentString += c.get(i).getCreator().getUsername() + ": " + c.get(i).getMessage() + "<br>";
+	}
 	
 %>
 
@@ -104,6 +111,14 @@
 				<p><strong>Description</strong></p>
 				<p class="text-muted"><%= e.getDescription() %></p>
 				<a target="_blank" rel="noopener noreferrer" href="http://<%= e.getWebsite() %>" class="mb-5"><strong>More info at...</strong></a>
+			</div>
+			<div class="w-75 mx-auto mt-4 pb-4">
+				<p><strong>Comments</strong></p>
+				<p id="comments" class="text-muted"><%= commentString %></p>
+				<div class="row">
+					<input type="text" class="form-control" id="eventNameInput" placeholder="Write Comment">
+					<button class="btn btn-dark w-50" data-toggle="modal" data-target="">Comment</button>
+				</div>
 			</div>
 			<!-- TODO upvote section  -->
 			<!-- TODO comment section  -->
