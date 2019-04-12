@@ -60,6 +60,7 @@
 	<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 	<link rel="manifest" href="site.webmanifest">
 	
+	<script src="jquery/jquery-3.3.1.min.js"></script>
 	<script>
 		var socket;
 		function connectToServer() {
@@ -86,17 +87,12 @@
 			return false;
 		}
 		
-		var input = document.getElementById("commentInput");
-
-		// Execute a function when the user releases a key on the keyboard
-		input.addEventListener("keyup", function(event) {
-		  // Number 13 is the "Enter" key on the keyboard
-		  if (event.keyCode === 13) {
-		    // Cancel the default action, if needed
-		    event.preventDefault();
-		    // Trigger the button element with a click
-		    document.getElementById("commentButton").click();
-		  }
+		
+		$(document).ready(function(){
+		    $('#commentInput').keypress(function(e){
+		      if(e.keyCode==13)
+		      $('#commentButton').click();
+		    });
 		});
 	
 	

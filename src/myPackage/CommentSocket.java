@@ -41,20 +41,22 @@ private static Vector<Session> sessionVector = new Vector<Session>();
         	creatorIDString = jsonJavaRootObject.get("creatorID").toString();
         	eventIDString = jsonJavaRootObject.get("eventID").toString();
         	messageString = jsonJavaRootObject.get("message").toString();
-		
-			
-			System.out.println(creatorIDString + eventIDString + messageString);
 			  
 			
-			boolean success = DatabaseConnector.createComment(Integer.valueOf(creatorIDString), Integer.valueOf(eventIDString), messageString);
-			String usernameString = DatabaseConnector.getUser(Integer.valueOf(creatorIDString)).getUsername();
+			boolean success = DatabaseConnector.createComment(
+					Integer.valueOf(creatorIDString), 
+					Integer.valueOf(eventIDString), messageString);
+			String usernameString = DatabaseConnector.getUser(
+					Integer.valueOf(creatorIDString)).getUsername();
 			
 			for (Session s : sessionVector) {
 				try {
 					if(success) {
-						s.getBasicRemote().sendText(usernameString + ": " + messageString);
+						s.getBasicRemote().sendText(usernameString + 
+								": " + messageString);
 					} else {
-						s.getBasicRemote().sendText("Sorry, an error occured while posting your comment");
+						s.getBasicRemote().sendText("Sorry, an error occured "
+								+ "while posting your comment");
 					}
 					
 				} catch (IOException e) {
