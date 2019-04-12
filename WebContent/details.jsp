@@ -18,8 +18,6 @@
 		userID = "";
 	}
 	
-	System.out.println("user id:" + userID);
-	
 	boolean loggedIn = false;
 	if (!username.equals("")) {
 		loggedIn = true;
@@ -32,7 +30,6 @@
 	   	rd.forward(request, response);
 	}
 	
-	System.out.println("event id:" + e.getEventID());
 	String eventIDString = String.valueOf(e.getEventID());
 
 	Date eventDate = e.getExpirationDate();
