@@ -12,6 +12,14 @@
 	if (username == null) {
 		username = "";
 	}
+	
+	String userID = (String)session.getAttribute("userID");
+	if (userID == null) {
+		userID = "";
+	}
+	
+	System.out.println("user id:" + userID);
+	
 	boolean loggedIn = false;
 	if (!username.equals("")) {
 		loggedIn = true;
@@ -23,6 +31,9 @@
 		RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
 	   	rd.forward(request, response);
 	}
+	
+	System.out.println("event id:" + e.getEventID());
+	String eventIDString = String.valueOf(e.getEventID());
 
 	Date eventDate = e.getExpirationDate();
 	EventDateParser date = new EventDateParser(eventDate);
@@ -48,8 +59,37 @@
 	<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 	<link rel="manifest" href="site.webmanifest">
+	
+	<script>
+		var socket;
+		function connectToServer() {
+			socket = new WebSocket("ws://localhost:8080/Play/commentSocket");
+			socket.onopen = function(event) {
+				//document.getElementById("comments").innerHTML += "Connected!<br />";
+			}
+			socket.onmessage = function(event) {
+				document.getElementById("comments").innerHTML += event.data + "<br />";
+			}
+			socket.onclose = function(event) {
+				//document.getElementById("comments").innerHTML += "Disconnected!<br />";
+			}
+		}
+		
+		function sendMessage() {
+			var comment = new Object();
+			comment.creatorID = "<%= userID%>";
+			comment.eventID  = "<%= eventIDString%>";
+			comment.message = document.getElementById("commentInput").value;
+			var jsonString= JSON.stringify(comment);
+			socket.send(jsonString);
+			document.getElementById("commentInput").value = "";
+			return false;
+		}
+	
+	
+	</script>
 </head>
-<body>
+<body onload="connectToServer()">
 	<div class="container-fluid p-0">
 		<nav class="navbar navbar-expand-lg navbar-dark">
 	       	<a class="navbar-brand font-weight-bold" href="index.jsp">Play</a>
@@ -111,9 +151,9 @@
 				<p><strong>Comments</strong></p>
 				<p id="comments" class="text-muted"><%= commentString %></p>
 				<div class="input-group mb-3">
-					<input type="text" class="form-control" id="eventNameInput" placeholder="Write Comment">
+					<input type="text" class="form-control" id="commentInput" placeholder="Write Comment">
 					<div class="input-group-append">
-						<button class="btn btn-dark" data-toggle="modal" data-target="">Comment</button>
+						<button class="btn btn-dark" data-toggle="modal" data-target="" onclick="sendMessage();">Comment</button>
 					</div>
 				</div>
 			</div>

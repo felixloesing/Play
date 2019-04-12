@@ -49,7 +49,7 @@ public class LoginServlet extends HttpServlet {
 				responseString = "";
 				HttpSession session = request.getSession();
 				session.setAttribute("username", username);
-				int userID = DatabaseConnector.getUser(username).getUserID();
+				String userID = String.valueOf(DatabaseConnector.getUser(username).getUserID());
 				session.setAttribute("userID", userID);
 			}
 		}
