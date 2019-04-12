@@ -82,7 +82,7 @@
 		  </div>
 		</div> -->
 	   	
-		<div class="w-75 my-5 mx-auto bg-light">
+		<div class="w-75 my-5 mx-auto bg-white rounded">
 			<div class="row mx-0">
 				<div id="img-placeholder" class="col-8 p-0">
 						<img src="categoryPhotos/<%=e.getCategory()%>.jpg" class="img-fluid">
