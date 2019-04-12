@@ -85,6 +85,19 @@
 			document.getElementById("commentInput").value = "";
 			return false;
 		}
+		
+		var input = document.getElementById("commentInput");
+
+		// Execute a function when the user releases a key on the keyboard
+		input.addEventListener("keyup", function(event) {
+		  // Number 13 is the "Enter" key on the keyboard
+		  if (event.keyCode === 13) {
+		    // Cancel the default action, if needed
+		    event.preventDefault();
+		    // Trigger the button element with a click
+		    document.getElementById("commentButton").click();
+		  }
+		});
 	
 	
 	</script>
@@ -150,15 +163,16 @@
 			<div class="w-75 mx-auto mt-4 pb-4">
 				<p><strong>Comments</strong></p>
 				<p id="comments" class="text-muted"><%= commentString %></p>
+				<%if (loggedIn) { %>
 				<div class="input-group mb-3">
 					<input type="text" class="form-control" id="commentInput" placeholder="Write Comment">
 					<div class="input-group-append">
-						<button class="btn btn-dark" data-toggle="modal" data-target="" onclick="sendMessage();">Comment</button>
+						<button id="commentButton" class="btn btn-dark" data-toggle="modal" data-target="" onclick="sendMessage();">Comment</button>
 					</div>
 				</div>
+				<%} %>
 			</div>
 			<!-- TODO upvote section  -->
-			<!-- TODO comment section  -->
 		</div>	   	
 	</div>
 
