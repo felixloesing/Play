@@ -165,6 +165,13 @@
 				</div>
 				<%} %>
 			</div>
+			
+			<div class="w-75 mx-auto mt-4 pb-4">
+				<p><strong>Upvotes</strong></p>
+				<button id="upvoteButton" class="btn btn-dark" data-toggle="modal" data-target="" onclick="sendUpvote();">↑</button>
+				<p class="font-weight-bold" id="upvotes" class="text-muted"><%= e.getUpvotes() %></p>
+				<button id="downvoteButton" class="btn btn-dark" data-toggle="modal" data-target="" onclick="sendDownvote();">↓</button>
+			</div>
 			<!-- TODO upvote section  -->
 		</div>	   	
 	</div>
