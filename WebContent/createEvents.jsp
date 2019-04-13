@@ -56,6 +56,8 @@
 				</ul>
 			</div>
 		</nav>
+		<br/>
+		<br/>
 
 		<div class="w-50 mx-auto mt-5">
 			<div class="border p-5 bg-white rounded">
@@ -130,6 +132,8 @@
 			</div>
 		</div>
 	</div>
+	<br/>
+	<br/>
 	
 	<div class="modal fade bd-example-modal-xl" id="mapModal" tabindex="-1" role="dialog" aria-labelledby="mapModal" aria-hidden="true">
 		<div class="modal-dialog modal-xl modal-dialog-centered" role="document">

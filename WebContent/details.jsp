@@ -164,7 +164,8 @@
 		    <a href="#" class="btn btn-primary">Go somewhere</a>
 		  </div>
 		</div> -->
-	   	
+	   	<br/>
+	   	<br/>
 		<div class="w-75 my-5 mx-auto bg-white rounded">
 			<div class="row mx-0">
 				<div id="img-placeholder" class="col-8 p-0">

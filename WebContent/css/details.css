@@ -6,6 +6,12 @@ html, body {
 
 nav {
 	background-color: #262F3D;
+	
+	position: fixed !important;
+    text-align: center;
+    top: 0;
+    width: 100%;
+    z-index: 10000;
 }
 
 #img-placeholder {
