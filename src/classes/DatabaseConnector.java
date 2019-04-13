@@ -204,7 +204,8 @@ public class DatabaseConnector {
 						rs.getString("description"),
 						rs.getTimestamp("expirationDate"),
 						rs.getString("website"),
-						rs.getString("category"));
+						rs.getString("category"),
+						rs.getString("address"));
 				if (up == 0) {
 					event.setColorCode(0);
 				} else {
@@ -313,7 +314,8 @@ public class DatabaseConnector {
 						rs.getString("description"),
 						rs.getTimestamp("expirationDate"),
 						rs.getString("website"),
-						rs.getString("category"));
+						rs.getString("category"),
+						rs.getString("address"));
 				if (up == 0) {
 					event.setColorCode(0);
 				} else {
@@ -380,7 +382,8 @@ public class DatabaseConnector {
 			String description,
 			Timestamp expirationDate,
 			String website,
-			String category) {
+			String category,
+			String address) {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		int rs = 0;
@@ -389,8 +392,8 @@ public class DatabaseConnector {
 			conn = DriverManager.getConnection(DB_URL);
 			ps = conn.prepareStatement("INSERT INTO Event "
 					+ "(name, creatorID, latitude, longitude, "
-					+ "description, expirationDate, website, category) "
-					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+					+ "description, expirationDate, website, category, address) "
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			ps.setString(1, name);
 			ps.setInt(2, creatorID);
 			ps.setString(3, latitude);
@@ -399,6 +402,7 @@ public class DatabaseConnector {
 			ps.setTimestamp(6, expirationDate);
 			ps.setString(7, website);
 			ps.setString(8, category);
+			ps.setString(9, address);
 			rs = ps.executeUpdate();
 		} catch (SQLException sqle) {
 			System.out.println ("SQLException: " + sqle.getMessage());

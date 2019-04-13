@@ -156,6 +156,7 @@
 			eventWebsite = document.getElementById('websiteInput').value;
 			expirationDate = document.getElementById('datetimepickerInput').value;
 			eventCategory = document.getElementById('eventCategoryInput').value;
+			eventAddress = document.getElementById('eventLocationInput').value;
 
 			$.ajax({
 				url : "createEventServlet",
@@ -166,7 +167,8 @@
 					lat : latitude,
 					lng : longitude,
 					expDate : expirationDate,
-					category : eventCategory
+					category : eventCategory,
+					address : eventAddress
 				},
 				success : function(result) {
 					console.log(result);
@@ -577,6 +579,5 @@
 	<script
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARjj3ad8bc8Fh1K_d3khuBu_3AbOc_mW0&libraries=places&callback=initMap"
 		async defer></script>
-	</script>
 </body>
 </html>

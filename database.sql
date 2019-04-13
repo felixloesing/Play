@@ -31,6 +31,7 @@ CREATE TABLE `Event` (
   `expirationDate` DATETIME NOT NULL,
   `website` VARCHAR(500) NOT NULL,
   `category` VARCHAR(45) NOT NULL,
+  `address` VARCHAR(500) NOT NULL,
   PRIMARY KEY (`eventID`),
   INDEX `userID_idx` (`creatorID` ASC),
   CONSTRAINT `userID`
