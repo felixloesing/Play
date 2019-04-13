@@ -103,6 +103,8 @@
 			upvote.message = "upvote";
 			var jsonString= JSON.stringify(upvote);
 			upvoteSocket.send(jsonString);
+			document.getElementById("upvoteButton").disabled = true;
+			document.getElementById("downvoteButton").disabled = true;
 			return false;
 		}
 		
@@ -112,6 +114,8 @@
 			downvote.message = "downvote";
 			var jsonString= JSON.stringify(downvote);
 			upvoteSocket.send(jsonString);
+			document.getElementById("upvoteButton").disabled = true;
+			document.getElementById("downvoteButton").disabled = true;
 			return false;
 		}
 		
