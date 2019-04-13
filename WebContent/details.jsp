@@ -60,6 +60,7 @@
 	<script src="jquery/jquery-3.3.1.min.js"></script>
 	<script>
 		var socket;
+		var upvoteSocket;
 		function connectToServer() {
 			socket = new WebSocket("ws://localhost:8080/Play/commentSocket");
 			socket.onopen = function(event) {
@@ -70,6 +71,18 @@
 			}
 			socket.onclose = function(event) {
 				//document.getElementById("comments").innerHTML += "Disconnected!<br />";
+			}
+			
+			//upvote Socket
+			upvoteSocket = new WebSocket("ws://localhost:8080/Play/upvoteSocket");
+			upvoteSocket.onopen = function(event) {
+				document.getElementById("comments").innerHTML = "Connected!";
+			}
+			upvoteSocket.onmessage = function(event) {
+				document.getElementById("comments").innerHTML = event.data;
+			}
+			upvoteSocket.onclose = function(event) {
+				document.getElementById("comments").innerHTML = "Disconnected!";
 			}
 		}
 		
