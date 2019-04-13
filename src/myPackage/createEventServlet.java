@@ -41,6 +41,7 @@ public class createEventServlet extends HttpServlet {
 		String longitude = request.getParameter("lng");
 		String expDate =  request.getParameter("expDate");
 		String category = request.getParameter("category");
+		String address = request.getParameter("address");
 		
 		HttpSession session = request.getSession();
 		String username = (String)session.getAttribute("username");
@@ -76,7 +77,7 @@ public class createEventServlet extends HttpServlet {
 			    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
 			    Date parsedDate = dateFormat.parse(expDate);
 			    Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
-			    DatabaseConnector.createEvent(name, creatorID, latitude, longitude, desc, timestamp, website, category);
+			    DatabaseConnector.createEvent(name, creatorID, latitude, longitude, desc, timestamp, website, category, address);
 			} 
 			catch (ParseException e) {
 				System.out.println("Exception :" + e);

@@ -179,7 +179,7 @@
 						<h3 class="mb-2"><%= e.getName() %></h3>
 						<p class="h5 text-muted">By <%= e.getCreator().getUsername() %></p>
 					</div>
-					<p class="mb-1">Begins at <%= date.getHour()%>:<%=String.format("%02d", date.getMinute()) %></p>
+					<p class="mb-1">Begins at <%= date.getHour()%>:<%=String.format("%02d", date.getMinute()) %> <br> <%= e.getAddress()%></p>
 				</div>
 			</div>
 			
