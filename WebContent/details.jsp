@@ -76,13 +76,13 @@
 			//upvote Socket
 			upvoteSocket = new WebSocket("ws://localhost:8080/Play/upvoteSocket");
 			upvoteSocket.onopen = function(event) {
-				document.getElementById("comments").innerHTML = "Connected!";
+				//document.getElementById("upvotes").innerHTML = "Connected!";
 			}
 			upvoteSocket.onmessage = function(event) {
-				document.getElementById("comments").innerHTML = event.data;
+				document.getElementById("upvotes").innerHTML = event.data;
 			}
 			upvoteSocket.onclose = function(event) {
-				document.getElementById("comments").innerHTML = "Disconnected!";
+				//document.getElementById("upvotes").innerHTML = "Disconnected!";
 			}
 		}
 		
@@ -94,6 +94,24 @@
 			var jsonString= JSON.stringify(comment);
 			socket.send(jsonString);
 			document.getElementById("commentInput").value = "";
+			return false;
+		}
+		
+		function sendUpvote() {
+			var upvote = new Object();
+			upvote.eventID  = "<%= eventIDString%>";
+			upvote.message = "upvote";
+			var jsonString= JSON.stringify(upvote);
+			upvoteSocket.send(jsonString);
+			return false;
+		}
+		
+		function sendDownvote() {
+			var downvote = new Object();
+			downvote.eventID  = "<%= eventIDString%>";
+			downvote.message = "downvote";
+			var jsonString= JSON.stringify(downvote);
+			upvoteSocket.send(jsonString);
 			return false;
 		}
 		
@@ -181,9 +199,13 @@
 			
 			<div class="w-75 mx-auto mt-4 pb-4">
 				<p><strong>Upvotes</strong></p>
-				<button id="upvoteButton" class="btn btn-dark" data-toggle="modal" data-target="" onclick="sendUpvote();">↑</button>
+				<%if (loggedIn) { %>
+					<button id="upvoteButton" class="btn btn-dark" data-toggle="modal" data-target="" onclick="sendUpvote();">↑</button>
+				<%} %>
 				<p class="font-weight-bold" id="upvotes" class="text-muted"><%= e.getUpvotes() %></p>
+				<%if (loggedIn) { %>
 				<button id="downvoteButton" class="btn btn-dark" data-toggle="modal" data-target="" onclick="sendDownvote();">↓</button>
+				<%} %>
 			</div>
 			<!-- TODO upvote section  -->
 		</div>	   	

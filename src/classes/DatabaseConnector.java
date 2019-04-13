@@ -420,7 +420,7 @@ public class DatabaseConnector {
 		return rs > 0;
 	}
 	
-	public boolean upvoteEvent(int eventID) {
+	public static boolean upvoteEvent(int eventID) {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		int rs = 0;
@@ -450,15 +450,15 @@ public class DatabaseConnector {
 		
 		return rs > 0;
 	}
-	public boolean downVotes(int eventID) {
+	public static boolean downVotes(int eventID) {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		int rs = 0;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = DriverManager.getConnection(DB_URL);
-			ps = conn.prepareStatement("UPDATE Event SET upvotes = upvotes - 1 "
-					+ "WHERE eventID=?" + "and upvotes > 0");
+			ps = conn.prepareStatement("UPDATE Event SET upvotes = GREATEST(0, upvotes - 1) "
+					+ "WHERE eventID=?");
 			ps.setInt(1, eventID);
 			rs = ps.executeUpdate();
 		} catch (SQLException sqle) {

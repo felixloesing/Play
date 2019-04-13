@@ -23,13 +23,13 @@ private static Vector<Session> sessionVector = new Vector<Session>();
 	
 	@OnOpen
 	public void open(Session session) {
-		System.out.println("CommentSocket Connection Made!");
+		//System.out.println("CommentSocket Connection Made!");
 		sessionVector.add(session);
 	}
 	
 	@OnMessage
 	public void onMessage(String message, Session session) {
-		System.out.println("Message received: " + message);
+		//System.out.println("Message received: " + message);
 		String creatorIDString = "";
 		String eventIDString = "";
 		String messageString = "";
@@ -71,7 +71,7 @@ private static Vector<Session> sessionVector = new Vector<Session>();
 	
 	@OnClose
 	public void close(Session session) {
-		System.out.println("CommentSocket Disconnected!");
+		//System.out.println("CommentSocket Disconnected!");
 		sessionVector.remove(session);
 	}
 	
