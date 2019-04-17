@@ -603,7 +603,9 @@
 			});
 			loadEvents();
 			
-			map.addListener('mousemove',newEvent);
+			map.addListener('mousemove',function() {
+				setTimeout(function() {newEvent();}, 500);
+			});
 		}
 	</script>
 	<script
