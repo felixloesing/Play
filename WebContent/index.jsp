@@ -49,7 +49,7 @@
   						</span>
 	   				</li> --%>
 	   				<li class="nav-item d-flex" style="color: rgba(255,255,255,.5)">
-	     				Hi, <%= username %> (<a class="nav-link p-0" href="LogoutServlet">logout</a>)
+	     				Hi, <a class="nav-link p-0" href="profile.jsp"> <%= username %></a> (<a class="nav-link p-0" href="LogoutServlet">logout</a>)
 	   				</li>
 	   			<% } else { %>
 	   				<li class="nav-item">
