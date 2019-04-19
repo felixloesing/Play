@@ -31,8 +31,6 @@ public class LoginServlet extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		
-		String UsernameString = DatabaseConnector.getUser(username).getUsername();
-		
 		String responseString = "";
 		if (username.equals("")) {
 			responseString = "Please enter your username.";
@@ -48,6 +46,7 @@ public class LoginServlet extends HttpServlet {
 			if (DatabaseConnector.login(username, password) == null) {
 				responseString = "The username and password do not match";
 			} else {
+				String UsernameString = DatabaseConnector.getUser(username).getUsername();
 				responseString = "";
 				HttpSession session = request.getSession();
 				session.setAttribute("username", UsernameString);

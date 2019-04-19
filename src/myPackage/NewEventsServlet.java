@@ -36,7 +36,10 @@ public class NewEventsServlet extends HttpServlet {
 		ArrayList<Event> events = DatabaseConnector.getEvents();
 		
 		ArrayList<Event> newEvent = new ArrayList<Event>();
-		newEvent.add(events.get(events.size()-1));
+		
+		if(events != null && events.size() > 0) {
+			newEvent.add(events.get(events.size()-1));
+		}
 		
 		String json = new Gson().toJson(newEvent);
 		
