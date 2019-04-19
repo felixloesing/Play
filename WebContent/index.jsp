@@ -143,6 +143,73 @@
 				})
 		}
 		
+		function newEvent() {
+			$
+			.ajax({
+				url : "NewEventsServlet",
+				data : {
+					
+				},
+				success : function(result) {
+					if (result === "") {
+					} else {
+						JSONString = result;
+						events = JSON.parse(JSONString);
+						
+							let i;
+							for (i = 0; i < events.length; i++) {
+						        
+						        var myLatLng = {
+									lat : events[i].latitude,
+									lng : events[i].longitude
+								};
+						        
+								var image = '';
+								
+								if(events[i].colorCode == 0) {
+									//black
+									image = 'https://cdn3.iconfinder.com/data/icons/web-ui-3/128/Marker-2-64.png'
+								} else if (events[i].colorCode == 1) {
+									//blue
+									image = 'https://cdn4.iconfinder.com/data/icons/web-ui-color/128/Marker-64.png';
+								} else if (events[i].colorCode == 2) {
+									//green
+									image = 'https://cdn3.iconfinder.com/data/icons/web-ui-color/128/Marker_green-64.png';
+								} else if (events[i].colorCode == 3) {
+									//red
+									image = 'https://cdn4.iconfinder.com/data/icons/web-ui-color/128/Marker_red-64.png';
+								}
+								
+						        let marker = new google.maps.Marker({
+									position: myLatLng,
+									map: map,
+									icon: image,
+									
+									store_id: events[i].eventID,
+									store_creatorID: events[i].creator.userID,
+									store_username: events[i].creator.username,
+									store_latitude: events[i].latitude,
+									store_longitude: events[i].longitude,
+									store_createdAt: events[i].createdAt,
+									store_upvotes: events[i].upvotes,
+									store_description: events[i].description,
+									store_expirationDate: events[i].expirationDate,
+									store_website: events[i].website,
+									store_colorCode: events[i].colorCode,
+									store_category: events[i].category,
+									store_comments: events[i].comments
+									
+								});
+								marker.addListener('click', function() {
+									//alert("ID: " + marker.get('store_id') + '\n' + 'Upvotes: ' + marker.get('store_upvotes'));
+									location.href = "DetailServlet?eventID=" + marker.get('store_id');
+							    });
+						    }
+						return false;
+					}
+				}
+			})
+	}
 		
 		function initMap() {
 			var myLatLng = {
@@ -486,6 +553,7 @@
 			map.addListener('bounds_changed', function() {
 				searchBox.setBounds(map.getBounds());
 			});
+
 			
 			/* var markers = []; */
 			searchBox.addListener('places_changed', function() {
@@ -533,8 +601,28 @@
 				});
 				map.fitBounds(bounds);
 			});
-			loadEvents();
+			loadEvents();					
+
+				if(window.Worker) {
+					const eventWorker = new Worker ("eventWorker.js");
+					
+					
+					map.addListener('mousemove', function() { 
+						setTimeout(function() {
+							eventWorker.postMessage('a');
+							console.log("Message posted to worker");
+						}, 1000);
+					});
+					
+					eventWorker.onmessage = function(e) {
+						console.log("Message received from worker.");
+						newEvent();
+					}
+				} else {
+					console.log("Browser does not support web workers.");
+				} 
 		}
+		
 	</script>
 	<script
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARjj3ad8bc8Fh1K_d3khuBu_3AbOc_mW0&libraries=places&callback=initMap"
