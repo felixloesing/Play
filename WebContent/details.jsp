@@ -8,38 +8,42 @@
 <%@page import="classes.EventDateParser" %>
 <%@page import="java.util.Date" %>
 <%
-	String username = (String)session.getAttribute("username");
-	if (username == null) {
-		username = "";
-	}
-	
-	String userID = (String)session.getAttribute("userID");
-	if (userID == null) {
-		userID = "";
-	}
-	
+	String username = "";
+	String userID = "";
 	boolean loggedIn = false;
-	if (!username.equals("")) {
+	if (session.getAttribute("username") != null) {
+		username = (String)session.getAttribute("username");
+		userID = (String)session.getAttribute("userID");
 		loggedIn = true;
 	}
 	
 	Event e = (Event)request.getAttribute("event");
-	
+	String eventIDString = "";
+	Date eventDate = null;
+	EventDateParser date = null;
+	String commentString = "";
+	ArrayList<Comment> c = null;
+	String name = "";
+	String category = "";
 	if(e == null) {
 		RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
 	   	rd.forward(request, response);
-	}
-	
-	String eventIDString = String.valueOf(e.getEventID());
+	} else {
+		eventIDString = String.valueOf(e.getEventID());
 
-	Date eventDate = e.getExpirationDate();
-	EventDateParser date = new EventDateParser(eventDate);
-	
-	String commentString = "";
-	ArrayList<Comment> c = e.getComments();
-	for (int i = 0; i < c.size(); i ++) {
-		commentString += c.get(i).getCreator().getUsername() + ": " + c.get(i).getMessage() + "<br>";
+		eventDate = e.getExpirationDate();
+		date = new EventDateParser(eventDate);
+		
+		c = e.getComments();
+		for (int i = 0; i < c.size(); i ++) {
+			commentString += c.get(i).getCreator().getUsername() + ": " + c.get(i).getMessage() + "<br>";
+		}
+		
+		name = e.getName();
+		category = e.getCategory();
 	}
+	
+	
 	
 %>
 
@@ -47,7 +51,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title><%= e.getName() %> details</title>
+	<title><%= name %> details</title>
 	
 	<link rel="stylesheet" href="bootstrap/bootstrap.min.css">
 	<link rel="stylesheet" href="fontawesome/css/all.min.css">
@@ -169,18 +173,18 @@
 		<div class="w-75 my-5 mx-auto bg-white rounded">
 			<div class="row mx-0">
 				<div id="img-placeholder" class="col-8 p-0">
-						<img src="categoryPhotos/<%=e.getCategory()%>.jpg" class="img-fluid">
+						<img src="categoryPhotos/<%=category%>.jpg" class="img-fluid">
 				</div>
 				<div class="col-4 d-flex flex-column justify-content-between">
 					<p class="h4 mt-2">
-						<%= date.getDay() %> <br/>
-						<%= date.getMonth() %>
+						<% if(date != null) { %><%= date.getDay() %> <% } %> <br/>
+						<% if(date != null) { %><%= date.getMonth() %><% } %>
 					</p>
 					<div>
-						<h3 class="mb-2"><%= e.getName() %></h3>
-						<p class="h5 text-muted">By <%= e.getCreator().getUsername() %></p>
+						<h3 class="mb-2"><% if(e != null) { %><%= e.getName() %><% } %></h3>
+						<p class="h5 text-muted">By <% if(e != null) { %><%= e.getCreator().getUsername() %><% } %></p>
 					</div>
-					<p class="mb-1">Begins at <%= date.getHour()%>:<%=String.format("%02d", date.getMinute()) %> <br> <%= e.getAddress()%></p>
+					<p class="mb-1">Begins at <% if(date != null) { %><%= date.getHour() + ":" + String.format("%02d", date.getMinute()) %><% } %> <br> <% if(e != null) { %><%= e.getAddress() %><% } %></p>
 				</div>
 			</div>
 			<div class="row mx-0">
@@ -190,15 +194,15 @@
 					<%if (loggedIn) { %>
 						<button id="upvoteButton" class="btn btn-dark mx-auto" data-toggle="modal" data-target="" onclick="sendUpvote();">↑</button>
 					<%} %>
-					<p class="font-weight-bold text-center pt-2" id="upvotes" class="text-muted"><%= e.getUpvotes() %></p> 
+					<p class="font-weight-bold text-center pt-2" id="upvotes" class="text-muted"><% if(e != null) { %><%= e.getUpvotes() %><% } %></p> 
 					<%if (loggedIn) { %>
 					<button id="downvoteButton" class="btn btn-dark mx-auto" data-toggle="modal" data-target="" onclick="sendDownvote();">↓</button>
 					<%} %>
 				</div>
 				<div class="col-10 mx-auto mt-4 pb-4 pl-0">
 					<p><strong>Description</strong></p>
-					<p class="text-muted"><%= e.getDescription() %></p>
-					<a target="_blank" rel="noopener noreferrer" href="http://<%= e.getWebsite() %>" class="mb-5"><strong>More info at...</strong></a>
+					<p class="text-muted"><% if(e != null) { %><%= e.getDescription() %><% } %></p>
+					<a target="_blank" rel="noopener noreferrer" href="http://<% if(e != null) { %><%= e.getWebsite() %><% } %>" class="mb-5"><strong>More info at...</strong></a>
 				</div>
 			</div>
 			<div class="w-75 mx-auto mt-4 pb-4 pl-4">
