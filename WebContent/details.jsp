@@ -183,13 +183,25 @@
 					<p class="mb-1">Begins at <%= date.getHour()%>:<%=String.format("%02d", date.getMinute()) %> <br> <%= e.getAddress()%></p>
 				</div>
 			</div>
-			
-			<div class="w-75 mx-auto mt-4 pb-4">
-				<p><strong>Description</strong></p>
-				<p class="text-muted"><%= e.getDescription() %></p>
-				<a target="_blank" rel="noopener noreferrer" href="http://<%= e.getWebsite() %>" class="mb-5"><strong>More info at...</strong></a>
+			<div class="row mx-0">
+				<div class="col-1 mx-auto nav flex-column">
+					</br>
+					<p class="text-center"><strong>Upvotes</strong></p>
+					<%if (loggedIn) { %>
+						<button id="upvoteButton" class="btn btn-dark mx-auto" data-toggle="modal" data-target="" onclick="sendUpvote();">↑</button>
+					<%} %>
+					<p class="font-weight-bold text-center pt-2" id="upvotes" class="text-muted"><%= e.getUpvotes() %></p> 
+					<%if (loggedIn) { %>
+					<button id="downvoteButton" class="btn btn-dark mx-auto" data-toggle="modal" data-target="" onclick="sendDownvote();">↓</button>
+					<%} %>
+				</div>
+				<div class="col-10 mx-auto mt-4 pb-4 pl-0">
+					<p><strong>Description</strong></p>
+					<p class="text-muted"><%= e.getDescription() %></p>
+					<a target="_blank" rel="noopener noreferrer" href="http://<%= e.getWebsite() %>" class="mb-5"><strong>More info at...</strong></a>
+				</div>
 			</div>
-			<div class="w-75 mx-auto mt-4 pb-4">
+			<div class="w-75 mx-auto mt-4 pb-4 pl-4">
 				<p><strong>Comments</strong></p>
 				<p id="comments" class="text-muted"><%= commentString %></p>
 				<%if (loggedIn) { %>
@@ -202,16 +214,7 @@
 				<%} %>
 			</div>
 			
-			<div class="w-75 mx-auto mt-4 pb-4">
-				<p><strong>Upvotes</strong></p>
-				<%if (loggedIn) { %>
-					<button id="upvoteButton" class="btn btn-dark" data-toggle="modal" data-target="" onclick="sendUpvote();">↑</button>
-				<%} %>
-				<p class="font-weight-bold" id="upvotes" class="text-muted"><%= e.getUpvotes() %></p>
-				<%if (loggedIn) { %>
-				<button id="downvoteButton" class="btn btn-dark" data-toggle="modal" data-target="" onclick="sendDownvote();">↓</button>
-				<%} %>
-			</div>
+			
 			<!-- TODO upvote section  -->
 		</div>	   	
 	</div>
