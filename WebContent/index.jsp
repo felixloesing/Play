@@ -601,12 +601,28 @@
 				});
 				map.fitBounds(bounds);
 			});
-			loadEvents();
-			
-			map.addListener('mousemove',function() {
-				setTimeout(function() {newEvent();}, 500);
-			});
+			loadEvents();					
+
+				if(window.Worker) {
+					const eventWorker = new Worker ("eventWorker.js");
+					
+					
+					map.addListener('mousemove', function() { 
+						setTimeout(function() {
+							eventWorker.postMessage('a');
+							console.log("Message posted to worker");
+						}, 1000);
+					});
+					
+					eventWorker.onmessage = function(e) {
+						console.log("Message received from worker.");
+						newEvent();
+					}
+				} else {
+					console.log("Browser does not support web workers.");
+				} 
 		}
+		
 	</script>
 	<script
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARjj3ad8bc8Fh1K_d3khuBu_3AbOc_mW0&libraries=places&callback=initMap"
