@@ -1,3 +1,5 @@
+<%@page import="classes.DatabaseConnector"%>
+<%@page import="java.util.Vector"%>
 <%@page import="classes.Comment"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -22,34 +24,15 @@
 	if (!username.equals("")) {
 		loggedIn = true;
 	}
-	
-	/*
-	Event e = (Event)request.getAttribute("event");
-	
-	if(e == null) {
-		RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
-	   	rd.forward(request, response);
-	}
-	
-	String eventIDString = String.valueOf(e.getEventID());
 
-	Date eventDate = e.getExpirationDate();
-	EventDateParser date = new EventDateParser(eventDate);
-	
-	String commentString = "";
-	ArrayList<Comment> c = e.getComments();
-	for (int i = 0; i < c.size(); i ++) {
-		commentString += c.get(i).getCreator().getUsername() + ": " + c.get(i).getMessage() + "<br>";
-	}
-	*/
-	
+	ArrayList<Event> events = DatabaseConnector.getEvents(Integer.valueOf(userID));
 %>
 
 
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>details</title>
+	<title>Profile</title>
 	
 	<link rel="stylesheet" href="bootstrap/bootstrap.min.css">
 	<link rel="stylesheet" href="fontawesome/css/all.min.css">
@@ -61,11 +44,27 @@
 	
 	<script src="jquery/jquery-3.3.1.min.js"></script>
 	<script>
-	
+	function deleteEvent(eID) {
+		$
+				.ajax({
+					url : "DeleteServlet",
+					data : {
+						eventID : eID,
+					},
+					success : function(result) {
+						console.log(result);
+						if (result === "") {
+							window.location.href = "index.jsp";
+						} else {
+							return false;
+						}
+					}
+				})
+	}
 	
 	</script>
 </head>
-<body onload="connectToServer()">
+<body>
 	<div class="container-fluid p-0">
 		<nav class="navbar navbar-expand-lg navbar-dark">
 	       	<a class="navbar-brand font-weight-bold" href="index.jsp">Play</a>
@@ -91,60 +90,18 @@
 			</div>
 	   	</nav>
 	   	
-	   	<!-- <div class="card w-75 mx-auto">
-		  <img src="event-backgrounds/dinner.jpg" class="card-img-top" alt="...">
-		  <div class="card-body">
-		    <h5 class="card-title">Card title</h5>
-		    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-		    <a href="#" class="btn btn-primary">Go somewhere</a>
-		  </div>
-		</div> -->
 	   	<br/>
 	   	<br/>
-		<div class="w-75 my-5 mx-auto bg-white rounded">
-			<div class="row mx-0">
-				<div class="col-4 d-flex flex-column justify-content-between">
-					<p class="h4 mt-2">
-					</p>
-					<div>
-						<h3 class="mb-2"></h3>
-						<p class="h5 text-muted">By </p>
-					</div>
-					<p class="mb-1">Begins at </p>
-				</div>
+		<div class="w-75 mx-auto mt-5">
+			<div class="border p-5 bg-white rounded">
+				<h2 class="text-center">Hi, <%= username %>!</h2>
+				<br>
+				<h3 class="text-left">Events you created</h3>
+				<% for (Event ev : events) {  %>
+					<p><%= ev.getName() %> <br> <%= ev.getAddress() %></p>
+					<button id="deleteButton" class="btn btn-dark mx-auto" data-toggle="modal" data-target="" onclick="return deleteEvent(<%=ev.getEventID()%>);">Delete Event</button>
+				<%} %>
 			</div>
-			<div class="row mx-0">
-				<div class="col-1 mx-auto nav flex-column">
-					</br>
-					<p class="text-center"><strong>Upvotes</strong></p>
-					<%if (loggedIn) { %>
-						<button id="upvoteButton" class="btn btn-dark mx-auto" data-toggle="modal" data-target="" onclick="sendUpvote();">↑</button>
-					<%} %>
-					<p class="font-weight-bold text-center pt-2" id="upvotes" class="text-muted"></p> 
-					<%if (loggedIn) { %>
-					<button id="downvoteButton" class="btn btn-dark mx-auto" data-toggle="modal" data-target="" onclick="sendDownvote();">↓</button>
-					<%} %>
-				</div>
-				<div class="col-10 mx-auto mt-4 pb-4 pl-0">
-					<p><strong>Description</strong></p>
-					<p class="text-muted"></p>
-				</div>
-			</div>
-			<div class="w-75 mx-auto mt-4 pb-4 pl-4">
-				<p><strong>Comments</strong></p>
-				<p id="comments" class="text-muted"><</p>
-				<%//if (loggedIn) { %>
-				<div class="input-group mb-3">
-					<input type="text" class="form-control" id="commentInput" placeholder="Write Comment">
-					<div class="input-group-append">
-						<button id="commentButton" class="btn btn-dark" data-toggle="modal" data-target="" onclick="sendMessage();">Comment</button>
-					</div>
-				</div>
-				<%//} %>
-			</div>
-			
-			
-			<!-- TODO upvote section  -->
 		</div>	   	
 	</div>
 

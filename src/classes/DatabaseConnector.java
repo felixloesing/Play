@@ -536,9 +536,13 @@ public class DatabaseConnector {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		int rs = 0;
+		PreparedStatement psC = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = DriverManager.getConnection(DB_URL);
+			psC = conn.prepareStatement("DELETE FROM Comment WHERE eventID=?");
+			psC.setInt(1, eventID);
+			psC.executeUpdate();
 			ps = conn.prepareStatement("DELETE FROM Event WHERE eventID=?");
 			ps.setInt(1, eventID);
 			rs = ps.executeUpdate();
