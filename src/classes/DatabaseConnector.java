@@ -374,6 +374,114 @@ public class DatabaseConnector {
 		return event;
 	}
 	
+	public static ArrayList<Event> getEvents(int userID) {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		PreparedStatement psSize = null;
+		PreparedStatement psTotal = null;
+		ResultSet rs = null;
+		ResultSet rsSize = null;
+		ResultSet rsTotal = null;
+		ArrayList<Event> events = new ArrayList<Event>();
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = DriverManager.getConnection(DB_URL);
+			ps = conn.prepareStatement("SELECT * "
+					+ "FROM Event e "
+					+ "LEFT JOIN User u ON e.creatorID=u.userID WHERE e.expirationDate>CURRENT_TIMESTAMP AND creatorID=?");
+			ps.setInt(1, userID);
+			rs = ps.executeQuery();
+			
+			psSize = conn.prepareStatement("SELECT COUNT(*) as count FROM Event");
+			rsSize = psSize.executeQuery();
+			int size = 0;
+
+			while(rsSize.next()) {
+				size = rsSize.getInt("count");
+			}
+
+			psTotal = conn.prepareStatement("SELECT SUM(upvotes) as up FROM Event");
+			rsTotal = psTotal.executeQuery();
+			int total = 0;
+
+			while(rsTotal.next()) {
+				total = rsTotal.getInt("up");
+			}
+			
+			while(rs.next()) {
+				int up = rs.getInt("upvotes");
+				Event event = new Event(
+						rs.getInt("eventID"),
+						rs.getString("name"),
+						rs.getInt("creatorID"),
+						rs.getString("username"),
+						rs.getString("latitude"),
+						rs.getString("longitude"),
+						rs.getTimestamp("createdAt"),
+						rs.getInt("upvotes"),
+						rs.getString("description"),
+						rs.getTimestamp("expirationDate"),
+						rs.getString("website"),
+						rs.getString("category"),
+						rs.getString("address"));
+				if (up == 0) {
+					event.setColorCode(0);
+				} else {
+					//calc color
+					if (total != 0 && size != 0) {
+						float avg = total/size;
+						float ratio = up/avg;
+						if (ratio < 0.75) {
+							event.setColorCode(1);
+						} else if (ratio > 0.75 && ratio < 1.25) {
+							event.setColorCode(2);
+						} else if (ratio > 1.25) {
+							event.setColorCode(3);
+						}
+					} else {
+						event.setColorCode(0);
+					}
+					
+					
+				}
+				events.add(event);
+			}
+		} catch (SQLException sqle) {
+			System.out.println ("SQLException: " + sqle.getMessage());
+			sqle.printStackTrace();
+		} catch (ClassNotFoundException cnfe) {
+			System.out.println ("CNFException: " + cnfe.getMessage());
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (ps != null) {
+					ps.close();
+				}
+				if (rsSize != null) {
+					rs.close();
+				}
+				if (psSize != null) {
+					ps.close();
+				}
+				if (rsTotal != null) {
+					rs.close();
+				}
+				if (psTotal != null) {
+					ps.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+		}
+		
+		return events;
+	}
+	
 	public static boolean createEvent(
 			String name,
 			int creatorID,
@@ -403,6 +511,40 @@ public class DatabaseConnector {
 			ps.setString(7, website);
 			ps.setString(8, category);
 			ps.setString(9, address);
+			rs = ps.executeUpdate();
+		} catch (SQLException sqle) {
+			System.out.println ("SQLException: " + sqle.getMessage());
+		} catch (ClassNotFoundException cnfe) {
+			System.out.println ("ClassNotFoundException: " + cnfe.getMessage());
+		} finally {
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+		}
+		
+		return rs > 0;
+	}
+	
+	public static boolean deleteEvent(int eventID) {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		int rs = 0;
+		PreparedStatement psC = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = DriverManager.getConnection(DB_URL);
+			psC = conn.prepareStatement("DELETE FROM Comment WHERE eventID=?");
+			psC.setInt(1, eventID);
+			psC.executeUpdate();
+			ps = conn.prepareStatement("DELETE FROM Event WHERE eventID=?");
+			ps.setInt(1, eventID);
 			rs = ps.executeUpdate();
 		} catch (SQLException sqle) {
 			System.out.println ("SQLException: " + sqle.getMessage());
