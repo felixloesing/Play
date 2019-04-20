@@ -92,7 +92,7 @@
 	   	
 	   	<br/>
 	   	<br/>
-		<div class="w-75 mx-auto mt-5">
+		<div class="w-50 mx-auto mt-5">
 			<div class="border p-5 bg-white rounded">
 				<h2 class="text-center">Hi, <%= username %>!</h2>
 				<br>
