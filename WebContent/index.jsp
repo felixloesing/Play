@@ -99,16 +99,16 @@
 									
 									if(events[i].colorCode == 0) {
 										//black
-										image = 'https://cdn3.iconfinder.com/data/icons/web-ui-3/128/Marker-2-64.png'
+										image = './map-icons/black-regular.svg';
 									} else if (events[i].colorCode == 1) {
 										//blue
-										image = 'https://cdn4.iconfinder.com/data/icons/web-ui-color/128/Marker-64.png';
+										image = './map-icons/blue-regular.svg';
 									} else if (events[i].colorCode == 2) {
 										//green
-										image = 'https://cdn3.iconfinder.com/data/icons/web-ui-color/128/Marker_green-64.png';
+										image = './map-icons/green-regular.svg';
 									} else if (events[i].colorCode == 3) {
 										//red
-										image = 'https://cdn4.iconfinder.com/data/icons/web-ui-color/128/Marker_red-64.png';
+										image = './map-icons/red-regular.svg';
 									}
 									
 							        let marker = new google.maps.Marker({
@@ -168,16 +168,16 @@
 								
 								if(events[i].colorCode == 0) {
 									//black
-									image = 'https://cdn3.iconfinder.com/data/icons/web-ui-3/128/Marker-2-64.png'
+									image = './map-icons/black-regular.svg';
 								} else if (events[i].colorCode == 1) {
 									//blue
-									image = 'https://cdn4.iconfinder.com/data/icons/web-ui-color/128/Marker-64.png';
+									image = './map-icons/blue-regular.svg';
 								} else if (events[i].colorCode == 2) {
 									//green
-									image = 'https://cdn3.iconfinder.com/data/icons/web-ui-color/128/Marker_green-64.png';
+									image = './map-icons/green-regular.svg';
 								} else if (events[i].colorCode == 3) {
 									//red
-									image = 'https://cdn4.iconfinder.com/data/icons/web-ui-color/128/Marker_red-64.png';
+									image = './map-icons/red-regular.svg';
 								}
 								
 						        let marker = new google.maps.Marker({
