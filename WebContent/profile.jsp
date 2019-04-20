@@ -100,6 +100,7 @@
 				<% for (Event ev : events) {  %>
 					<p><%= ev.getName() %> <br> <%= ev.getAddress() %></p>
 					<button id="deleteButton" class="btn btn-dark mx-auto" data-toggle="modal" data-target="" onclick="return deleteEvent(<%=ev.getEventID()%>);">Delete Event</button>
+					<br/>
 				<%} %>
 			</div>
 		</div>	   	
