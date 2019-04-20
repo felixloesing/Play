@@ -99,16 +99,16 @@
 									
 									if(events[i].colorCode == 0) {
 										//black
-										image = './map-icons/black-regular.svg';
+										image = './map-icons/white-64.png';
 									} else if (events[i].colorCode == 1) {
 										//blue
-										image = './map-icons/blue-regular.svg';
+										image = './map-icons/blue-64.png';
 									} else if (events[i].colorCode == 2) {
 										//green
-										image = './map-icons/green-regular.svg';
+										image = './map-icons/green-64.png';
 									} else if (events[i].colorCode == 3) {
 										//red
-										image = './map-icons/red-regular.svg';
+										image = './map-icons/red-64.png';
 									}
 									
 							        let marker = new google.maps.Marker({
@@ -168,16 +168,16 @@
 								
 								if(events[i].colorCode == 0) {
 									//black
-									image = './map-icons/black-regular.svg';
+									image = './map-icons/white-64.png';
 								} else if (events[i].colorCode == 1) {
 									//blue
-									image = './map-icons/blue-regular.svg';
+									image = './map-icons/blue-64.png';
 								} else if (events[i].colorCode == 2) {
 									//green
-									image = './map-icons/green-regular.svg';
+									image = './map-icons/green-64.png';
 								} else if (events[i].colorCode == 3) {
 									//red
-									image = './map-icons/red-regular.svg';
+									image = './map-icons/red-64.png';
 								}
 								
 						        let marker = new google.maps.Marker({
