@@ -11,7 +11,7 @@
 	String username = "";
 	String userID = "";
 	boolean loggedIn = false;
-	if (session.getAttribute("username") != null) {
+	if (session.getAttribute("username") != null && !session.getAttribute("username").equals("")) {
 		username = (String)session.getAttribute("username");
 		userID = (String)session.getAttribute("userID");
 		loggedIn = true;
